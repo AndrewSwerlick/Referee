@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Swerl.Referee.Activities;
 using Swerl.Referee.Configuration;
+using Swerl.Referee.Extensions;
 using Swerl.Referee.Factories;
 
 namespace Swerl.Referee.Resolvers
@@ -50,7 +51,7 @@ namespace Swerl.Referee.Resolvers
 
         public IActivity GetActivity<T>(Expression<Action<T>> expression)
         {
-            return GetActivity((LambdaExpression) expression);           
+            return GetActivity((LambdaExpression) expression);
         }
 
         public IActivity GetActivity(LambdaExpression expression)

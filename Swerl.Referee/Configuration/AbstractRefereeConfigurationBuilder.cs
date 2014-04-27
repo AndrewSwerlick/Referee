@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -25,6 +26,8 @@ namespace Swerl.Referee.Configuration
         public void Register(Func<TRegistration,TRegistration> acitivyRegistrationExpression)
         {
             var registration = acitivyRegistrationExpression.Invoke(BuildRegistration());
+            if(registration.AuthorizerType == null)
+                throw new InvalidRegistrationException();
             ActivityRegistrations.Add(registration);
         }       
 
