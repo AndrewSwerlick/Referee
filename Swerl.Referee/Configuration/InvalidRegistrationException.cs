@@ -8,5 +8,9 @@ namespace Swerl.Referee.Configuration
 {
     public class InvalidRegistrationException : Exception
     {
+        public InvalidRegistrationException(string message) : base(message)
+        {
+            
+        }
     }
 }

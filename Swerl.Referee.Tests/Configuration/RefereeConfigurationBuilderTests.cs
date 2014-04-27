@@ -39,6 +39,33 @@ namespace Swerl.Referee.UnitTests.Configuration
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
         }
 
+        [Test]
+        public void Ensure_That_If_We_Try_To_Register_The_Same_Method_Twice_It_Throws_An_Exception()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+
+            Assert.Throws<InvalidRegistrationException>(()=>conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>()));
+        }
+
+        [Test]
+        public void Ensure_That_If_We_Try_To_Register_The_Same_Type_Twice_Without_Method_Information_It_Throws_An_Exception()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+
+            Assert.Throws<InvalidRegistrationException>(() => conf.Register(a => a.As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>()));
+        }
+
+        [Test]
+        public void Ensure_That_If_We_Try_To_Register_The_Same_Name_Twice_Without_Method_Information_It_Throws_An_Exception()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
+
+            Assert.Throws<InvalidRegistrationException>(() => conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>()));
+        }
+
         private RefereeConfigurationBuilder BuildConfigurationObject()
         {
             return new RefereeConfigurationBuilder(new TestAuthorizerFactory(), new ActivityFactory());

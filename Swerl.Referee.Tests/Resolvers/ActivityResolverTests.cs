@@ -136,6 +136,24 @@ namespace Swerl.Referee.UnitTests.Resolvers
             Assert.That(act.Id, Is.EqualTo("test"));
         }
 
+        [Test]
+        public void
+            Ensure_When_We_Register_Two_Methods_With_The_Same_Names_As_The_Same_Activity_Type_We_Can_Resolve_Each_Individually
+            ()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+            conf.Register(a => a.Method<TestCodeClass2>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+
+            var resolver = BuildActivityResolver(conf.ActivityRegistrations);
+            var act1 = resolver.GetActivity<TestCodeClass>(c => c.DoSomething("test"));
+            var act2 = resolver.GetActivity<TestCodeClass2>(c => c.DoSomething("test"));
+
+            Assert.That(act1 is TestActivity);
+            Assert.That(act2 is TestActivity);
+        }
+
+
         protected ActivityResolver BuildActivityResolver(IEnumerable<ActivityRegistration> registrations)
         {
             return new ActivityResolver(new ActivityFactory(), registrations);
