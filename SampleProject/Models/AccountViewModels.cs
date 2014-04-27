@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SampleProject.Models
+namespace Swerl.Referee.NerdDinnerSample.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

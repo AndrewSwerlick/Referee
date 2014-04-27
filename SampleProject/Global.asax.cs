@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Swerl.Referee.Authorizers;
-using Swerl.Referee.Configuration;
-using Swerl.Referee.MVC;
 
-namespace SampleProject
+namespace Swerl.Referee.NerdDinnerSample
 {
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -19,7 +13,7 @@ namespace SampleProject
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Referee.Configure((builder) =>
+            MVC.Referee.Configure((builder) =>
             {
                 builder.Register(c=> c.Name("Test").AuthorizedBy<DefaultAuthorizer>().HandleFailureWith<HttpNotFoundResult>());
                 builder.Register(c=> c.Name("Test2").AuthorizedBy<DefaultAuthorizer>());

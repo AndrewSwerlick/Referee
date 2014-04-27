@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
-namespace SampleProject
+namespace Swerl.Referee.NerdDinnerSample
 {
     public class FilterConfig
     {

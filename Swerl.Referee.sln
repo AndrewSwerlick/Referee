@@ -7,11 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swerl.Referee", "Swerl.Refe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swerl.Referee.MVC", "Swerl.Referee.MVC\Swerl.Referee.MVC.csproj", "{E2B85A3D-1987-45EA-BF97-A42448BB3FB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleProject", "SampleProject\SampleProject.csproj", "{02607E53-906A-4B5E-8B3C-7A5EDB8FE55F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swerl.Glasses", "Swerl.Glasses\Swerl.Glasses.csproj", "{7749FE7C-84FA-4416-A91D-F8D9B3B9B3EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swerl.Inquire", "Swerl.Inquire\Swerl.Inquire.csproj", "{CF7C86FF-A330-4ACA-B4BC-33C0B14921B5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swerl.Referee.NerdDinnerSample", "SampleProject\Swerl.Referee.NerdDinnerSample.csproj", "{02607E53-906A-4B5E-8B3C-7A5EDB8FE55F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swerl.Referee.UnitTests", "Swerl.Referee.Tests\Swerl.Referee.UnitTests.csproj", "{1AAC5158-F077-4A45-9C1B-506C8591A483}"
 EndProject
@@ -40,14 +36,6 @@ Global
 		{02607E53-906A-4B5E-8B3C-7A5EDB8FE55F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02607E53-906A-4B5E-8B3C-7A5EDB8FE55F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02607E53-906A-4B5E-8B3C-7A5EDB8FE55F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7749FE7C-84FA-4416-A91D-F8D9B3B9B3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7749FE7C-84FA-4416-A91D-F8D9B3B9B3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7749FE7C-84FA-4416-A91D-F8D9B3B9B3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7749FE7C-84FA-4416-A91D-F8D9B3B9B3EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF7C86FF-A330-4ACA-B4BC-33C0B14921B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF7C86FF-A330-4ACA-B4BC-33C0B14921B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF7C86FF-A330-4ACA-B4BC-33C0B14921B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF7C86FF-A330-4ACA-B4BC-33C0B14921B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1AAC5158-F077-4A45-9C1B-506C8591A483}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1AAC5158-F077-4A45-9C1B-506C8591A483}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AAC5158-F077-4A45-9C1B-506C8591A483}.Release|Any CPU.ActiveCfg = Release|Any CPU

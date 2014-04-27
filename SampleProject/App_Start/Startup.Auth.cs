@@ -3,7 +3,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
-namespace SampleProject
+namespace Swerl.Referee.NerdDinnerSample
 {
     public partial class Startup
     {

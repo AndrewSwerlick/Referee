@@ -1,8 +1,9 @@
 ﻿using Microsoft.Owin;
 using Owin;
+using Swerl.Referee.NerdDinnerSample;
 
-[assembly: OwinStartupAttribute(typeof(SampleProject.Startup))]
-namespace SampleProject
+[assembly: OwinStartup(typeof(Startup))]
+namespace Swerl.Referee.NerdDinnerSample
 {
     public partial class Startup
     {

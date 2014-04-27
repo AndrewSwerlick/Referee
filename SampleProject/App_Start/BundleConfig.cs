@@ -1,7 +1,6 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
-namespace SampleProject
+namespace Swerl.Referee.NerdDinnerSample
 {
     public class BundleConfig
     {
