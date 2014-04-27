@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Swerl.Referee.Activities;
@@ -12,23 +13,23 @@ namespace Swerl.Referee.Resolvers
     public class AuthorizerResolver : IAuthorizerResolver
     {
         private readonly IAuthorizerFactory _authorizerFactory;
-        private readonly IDictionary<Type, Type> _registeredActivities;
-        private readonly IDictionary<string, Type> _registeredActivityNames;
+        private readonly IDictionary<Type, IList<Type>> _registeredActivities;
+        private readonly IDictionary<string, IList<Type>> _registeredActivityNames;
 
         public AuthorizerResolver(IAuthorizerFactory authorizerFactory,IEnumerable<IActivityRegistration> activityRegistrations)
         {
             var registrations = activityRegistrations as IActivityRegistration[] ?? activityRegistrations.ToArray();
             var authorizersForTypedActivitiesDictionary =
-                registrations.Where(a => a.AuthorizerType != null && a.ActivityType != null).ToDictionary(a => a.ActivityType, a => a.AuthorizerType);
+                registrations.Where(a => a.ActivityType != null).ToDictionary(a => a.ActivityType, a => a.AuthorizerTypes);
             
             var authorizersForNamedActivitiesDictionary = registrations
-                .Where(a => a.AuthorizerType != null && a.ActivityMethod == null).ToDictionary(
+                .Where(a => a.AuthorizerTypes != null && a.ActivityMethod == null).ToDictionary(
                     a => !string.IsNullOrEmpty(a.ActivityName) ? a.ActivityName : a.ActivityType.Name, 
-                    a => a.AuthorizerType);            
+                    a => a.AuthorizerTypes);            
 
             var authorizedForMethodActivities = registrations.Where(a => a.ActivityMethod != null).ToDictionary(
                 a => a.ActivityMethod.DeclaringType.FullName +"-"+a.ActivityMethod.Name,
-                a => a.AuthorizerType
+                a => a.AuthorizerTypes
                 );
 
             _authorizerFactory = authorizerFactory;
@@ -40,20 +41,20 @@ namespace Swerl.Referee.Resolvers
             }
         }
 
-        public IActivityAuthorizer GetAuthorizer(IActivity activity)
+        public IList<IActivityAuthorizer> GetAuthorizers(IActivity activity)
         {
             if (_registeredActivities.ContainsKey(activity.GetType()))
-                return BuildAuthorizer(_registeredActivities[activity.GetType()]);
+                return BuildAuthorizers(_registeredActivities[activity.GetType()]);
 
             if (_registeredActivityNames.ContainsKey(activity.Name))
-                return BuildAuthorizer(_registeredActivityNames[activity.Name]);
+                return BuildAuthorizers(_registeredActivityNames[activity.Name]);
 
-            return _authorizerFactory.BuildDefaultAuthorizer();
+            return new[] {_authorizerFactory.BuildDefaultAuthorizer()};
         }
 
-        protected virtual IActivityAuthorizer BuildAuthorizer(Type type)
+        protected virtual IList<IActivityAuthorizer> BuildAuthorizers(IList<Type> types)
         {
-            return _authorizerFactory.BuilAuthorizer(type);
+            return types.Select(type=> _authorizerFactory.BuilAuthorizer(type)).ToList();
         }
     }
 }

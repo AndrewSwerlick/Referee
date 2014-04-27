@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Principal;
 using NUnit.Framework;
@@ -28,11 +29,11 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityName = "Test Activity", 
-                    AuthorizerType = typeof(TestAuthorizer)
+                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
                 }
             });
 
-            var authorizer = resolver.GetAuthorizer(new NamedActivity("Test Activity"));
+            var authorizer = resolver.GetAuthorizers(new NamedActivity("Test Activity")).First();
             Assert.That(authorizer is TestAuthorizer);
         }
 
@@ -44,11 +45,11 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityType = typeof(TestActivity), 
-                    AuthorizerType = typeof(TestAuthorizer)
+                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
                 }
             });
 
-            var authorizer = resolver.GetAuthorizer(new TestActivity());
+            var authorizer = resolver.GetAuthorizers(new TestActivity()).First();
             Assert.That(authorizer is TestAuthorizer);
         }
 
@@ -60,11 +61,12 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass).GetMethod("DoSomething"), 
-                    AuthorizerType = typeof(TestAuthorizer)
+                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
                 }
             });
 
-            var authorizer = resolver.GetAuthorizer(new MethodActivity(typeof (TestCodeClass).GetMethod("DoSomething")));
+            var authorizer =
+                resolver.GetAuthorizers(new MethodActivity(typeof (TestCodeClass).GetMethod("DoSomething"))).First();
             Assert.That(authorizer is TestAuthorizer);
         }
 
@@ -78,17 +80,17 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass).GetMethod("DoSomething"), 
-                    AuthorizerType = typeof(TestAuthorizer)
+                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
                 },
                  new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass2).GetMethod("DoSomething"), 
-                    AuthorizerType = typeof(UnauthorizedAuthorizer)
+                    AuthorizerTypes = new[] {typeof(UnauthorizedAuthorizer)}
                 },
             });
 
-            var authorizer1 = resolver.GetAuthorizer(new MethodActivity(typeof(TestCodeClass).GetMethod("DoSomething")));
-            var authorizer2 = resolver.GetAuthorizer(new MethodActivity(typeof(TestCodeClass2).GetMethod("DoSomething")));
+            var authorizer1 = resolver.GetAuthorizers(new MethodActivity(typeof(TestCodeClass).GetMethod("DoSomething"))).First();
+            var authorizer2 = resolver.GetAuthorizers(new MethodActivity(typeof(TestCodeClass2).GetMethod("DoSomething"))).First();
 
             Assert.That(authorizer1 is TestAuthorizer);
             Assert.That(authorizer2 is UnauthorizedAuthorizer);
@@ -100,10 +102,10 @@ namespace Swerl.Referee.UnitTests.Resolvers
             ()
         {
             var resolver = BuildAuthorizerResolver(new ActivityRegistration[]{});
-            var authorizer = resolver.GetAuthorizer(new MethodActivity(typeof(TestCodeClass).GetMethod("DoSomething")));
+            var authorizer = resolver.GetAuthorizers(new MethodActivity(typeof(TestCodeClass).GetMethod("DoSomething"))).First();
 
             Assert.That(authorizer is DefaultAuthorizer);
-        }
+        }          
 
         private AuthorizerResolver BuildAuthorizerResolver(IList<ActivityRegistration> registrations)
         {           

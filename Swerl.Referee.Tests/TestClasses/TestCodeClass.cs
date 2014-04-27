@@ -10,6 +10,12 @@
             SomethingDone = true;
             Param = "test";
         }
+
+        public void DoSomething2(string param)
+        {
+            SomethingDone = true;
+            Param = "test";
+        }
     }
 
     public class TestCodeClass2

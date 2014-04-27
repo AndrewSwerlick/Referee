@@ -1,10 +1,11 @@
-﻿using Swerl.Referee.Activities;
+﻿using System.Collections.Generic;
+using Swerl.Referee.Activities;
 using Swerl.Referee.Authorizers;
 
 namespace Swerl.Referee.Resolvers
 {
     public interface IAuthorizerResolver
     {
-        IActivityAuthorizer GetAuthorizer(IActivity activity);
+        IList<IActivityAuthorizer> GetAuthorizers(IActivity activity);
     }
 }

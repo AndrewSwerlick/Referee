@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
 using Swerl.Referee.Activities;
@@ -11,7 +12,7 @@ namespace Swerl.Referee.Configuration
         string ActivityName { get; set; }
         MethodInfo ActivityMethod { get; set; }
         Type ActivityType { get; set; }
-        Type AuthorizerType { get; set; }
+        IList<Type> AuthorizerTypes { get; set; }
     }
 
     public class ActivityRegistration<TActivity> : IActivityRegistration where TActivity : ActivityRegistration<TActivity>
@@ -19,11 +20,17 @@ namespace Swerl.Referee.Configuration
         public string ActivityName { get; set; }
         public MethodInfo ActivityMethod { get; set; }
         public Type ActivityType { get; set; }
-        public Type AuthorizerType { get; set; }
+        public IList<Type> AuthorizerTypes { get; set; }
+
+        public ActivityRegistration()
+        {
+            AuthorizerTypes = new List<Type>();
+        }
+          
 
         public TActivity AuthorizedBy<T>() where T : IActivityAuthorizer
         {
-            AuthorizerType = typeof (T);
+            AuthorizerTypes.Add(typeof (T));
             return (TActivity)this;
         }
 

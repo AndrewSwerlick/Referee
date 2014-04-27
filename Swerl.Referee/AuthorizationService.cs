@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Principal;
 using Swerl.Referee.Activities;
@@ -20,13 +21,13 @@ namespace Swerl.Referee
 
         public bool Authorize(IActivity activity, IPrincipal user)
         {
-            return _authorizerResolver.GetAuthorizer(activity).Authorize(activity, user);
+            return _authorizerResolver.GetAuthorizers(activity).All(a=> a.Authorize(activity, user));
         }
 
         public bool Authorize<T>(Expression<Action<T>> expression, IPrincipal user)
         {
             var activity = ActivityResolver.GetActivity(expression);
-            return _authorizerResolver.GetAuthorizer(activity).Authorize(activity, user);
+            return _authorizerResolver.GetAuthorizers(activity).All( a=> a.Authorize(activity, user));
         }
     }
 }

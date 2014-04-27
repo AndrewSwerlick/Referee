@@ -20,7 +20,7 @@ namespace Swerl.Referee.MVC.UnitTests
             var context = FilterContextHelper.ContextFromExpression<TestController>(c => c.ControllerAction("test"));
 
             var authresolver = Mock.Of<IAuthorizerResolver>();
-            Mock.Get(authresolver).Setup(r => r.GetAuthorizer(It.IsAny<IActivity>())).Returns(new UnauthorizedAuthorizer());
+            Mock.Get(authresolver).Setup(r => r.GetAuthorizers(It.IsAny<IActivity>())).Returns(new IActivityAuthorizer[]{new UnauthorizedAuthorizer()});
 
             var activityResolver = Mock.Of<IActivityResolver>();
             Mock.Get(activityResolver).Setup(s => s.GetActivity(It.IsAny<LambdaExpression>())).Returns(new TestActivity());
@@ -42,7 +42,7 @@ namespace Swerl.Referee.MVC.UnitTests
             var context = FilterContextHelper.ContextFromExpression<TestController>(c => c.ControllerAction("test"));
 
             var authresolver = Mock.Of<IAuthorizerResolver>();
-            Mock.Get(authresolver).Setup(r => r.GetAuthorizer(It.IsAny<IActivity>())).Returns(new DefaultAuthorizer());
+            Mock.Get(authresolver).Setup(r => r.GetAuthorizers(It.IsAny<IActivity>())).Returns(new IActivityAuthorizer[]{new DefaultAuthorizer()});
 
             var activityResolver = Mock.Of<IActivityResolver>();
             Mock.Get(activityResolver).Setup(s => s.GetActivity(It.IsAny<LambdaExpression>())).Returns(new TestActivity());

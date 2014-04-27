@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using Swerl.Referee.Authorizers;
 using Swerl.Referee.Configuration;
 
@@ -10,7 +11,7 @@ namespace Swerl.Referee.UnitTests.Configuration
         public void Ensure_We_Can_Fluently_Register_An_Authorizer_For_An_Activity_Registration()
         {
             var registration = new ActivityRegistration().AuthorizedBy<DefaultAuthorizer>();
-            Assert.That(registration.AuthorizerType, Is.EqualTo(typeof (DefaultAuthorizer)));
+            Assert.That(registration.AuthorizerTypes.First(), Is.EqualTo(typeof (DefaultAuthorizer)));
         }
     }
 }
