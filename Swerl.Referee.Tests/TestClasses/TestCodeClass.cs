@@ -23,4 +23,9 @@
             Param = "test";
         }
     }
+
+    public class TestChildClass : TestCodeClass
+    {
+        
+    }
 }

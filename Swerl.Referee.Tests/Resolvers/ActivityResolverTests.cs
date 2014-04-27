@@ -138,7 +138,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
 
         [Test]
         public void
-            Ensure_When_We_Register_Two_Methods_With_The_Same_Names_As_The_Same_Activity_Type_We_Can_Resolve_Each_Individually
+            Ensure_When_We_Register_Two_Methods_With_The_Same_As_The_Same_Activity_Type_We_Can_Resolve_Each_Individually
             ()
         {
             var conf = BuildConfigurationObject();
@@ -151,6 +151,20 @@ namespace Swerl.Referee.UnitTests.Resolvers
 
             Assert.That(act1 is TestActivity);
             Assert.That(act2 is TestActivity);
+        }
+
+        [Test]
+        public void
+            Ensure_When_We_Register_The_Method_Of_A_Base_Class_We_Can_Resolve_The_Activity_With_An_Expression_Using_The_Child_Class
+            ()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+
+            var resolver = BuildActivityResolver(conf.ActivityRegistrations);
+            var act = resolver.GetActivity<TestChildClass>(c => c.DoSomething("test"));
+
+            Assert.That(act is TestActivity);
         }
 
 
