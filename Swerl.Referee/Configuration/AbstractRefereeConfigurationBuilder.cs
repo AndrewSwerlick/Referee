@@ -100,5 +100,19 @@ namespace Swerl.Referee.Core.Configuration
 
             ActivityRegistrations.Add(registration);
         }
+
+        public void InvokeStaticRegistrationMethods(params Assembly[] assemblies)
+        {
+            var methods = assemblies.SelectMany(
+                a =>
+                    a.GetTypes()
+                        .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public))
+                        .Where(m => m.GetCustomAttributes(typeof (AuthorizationRegistrationAttribute)).Any()));
+
+            foreach (var methodInfo in methods)
+            {
+                methodInfo.Invoke(null, new object[] {this});
+            }
+        }
     }
 }

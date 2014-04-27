@@ -1,4 +1,6 @@
-﻿namespace Swerl.Referee.UnitTests.TestClasses
+﻿using Swerl.Referee.Core.Configuration;
+
+namespace Swerl.Referee.UnitTests.TestClasses
 {
     public class TestCodeClass
     {
@@ -20,6 +22,12 @@
 
     public class TestCodeClass2
     {
+        [AuthorizationRegistration]
+        public static void RegisterAuth(RefereeConfigurationBuilder configuration)
+        {
+            configuration.Register(a=> a.Method<TestCodeClass2>(c=> c.DoSomething(default(string))).AuthorizedBy<UnauthorizedAuthorizer>());
+        }
+
         public bool SomethingDone { get; set; }
         public string Param { get; set; }
 

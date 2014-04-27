@@ -43,6 +43,7 @@
     <Compile Include="Configuration\ActivityRegistration.cs" />
     <Compile Include="Configuration\AuthorizationConfiguration.cs" />
     <Compile Include="Authorizers\AbstractActivityAuthorizer.cs" />
+    <Compile Include="Configuration\AuthorizationRegistrationAttribute.cs" />
     <Compile Include="Configuration\InvalidRegistrationException.cs" />
     <Compile Include="Configuration\RefereeConfigurationBuilder.cs" />
     <Compile Include="Extensions\ExpressionExtensions.cs" />

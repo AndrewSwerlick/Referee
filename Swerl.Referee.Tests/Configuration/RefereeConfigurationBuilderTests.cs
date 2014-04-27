@@ -101,6 +101,15 @@ namespace Swerl.Referee.UnitTests.Configuration
             Assert.That(conf.ActivityRegistrations.Single(a=> a.ActivityMethod.Name == "DoSomething").AuthorizerTypes.Count, Is.EqualTo(2));
         }
 
+        [Test]
+        public void Ensure_We_Can_Call_Registration_Methods_Defined_In_Other_Classes_With_Attributes()
+        {
+            var conf = BuildConfigurationObject();
+            conf.InvokeStaticRegistrationMethods(typeof (RefereeConfigurationBuilderTests).Assembly);
+
+            Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
+        }
+
         private RefereeConfigurationBuilder BuildConfigurationObject()
         {
             return new RefereeConfigurationBuilder(new TestAuthorizerFactory(), new ActivityFactory());

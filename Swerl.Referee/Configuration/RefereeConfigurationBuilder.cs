@@ -1,4 +1,6 @@
-﻿using Swerl.Referee.Core.Factories;
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
+using Swerl.Referee.Core.Factories;
 
 namespace Swerl.Referee.Core.Configuration
 {
@@ -11,6 +13,6 @@ namespace Swerl.Referee.Core.Configuration
         public override ActivityRegistration BuildRegistration()
         {
             return new ActivityRegistration();
-        }
+        }      
     }
 }

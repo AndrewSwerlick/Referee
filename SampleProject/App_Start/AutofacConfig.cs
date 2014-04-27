@@ -19,6 +19,7 @@ namespace Swerl.Referee.NerdDinnerSample.App_Start
             builder.RegisterType<ApplicationDbContext>().InstancePerHttpRequest();
             builder.RegisterInstance(authorizationService).As<IAuthorizationService>();
             builder.RegisterControllers(typeof (AutofacConfig).Assembly);
+            builder.RegisterAssemblyTypes(typeof (AutofacConfig).Assembly);
             var container = builder.Build();
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
         }
