@@ -74,7 +74,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorizationFailureManagerTests.cs" />
     <Compile Include="AuthorizeActivityFilterTests.cs" />
+    <Compile Include="Configuration\MVCRefereeConfigurationBuilderTests.cs" />
+    <Compile Include="Helpers\ConfigurationBuilderHelper.cs" />
     <Compile Include="Helpers\FilterContextHelper.cs" />
     <Compile Include="MvcAuthorizationServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

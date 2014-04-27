@@ -10,22 +10,22 @@ namespace Swerl.Referee.Activities
 {
     public class MethodActivity : IActivity
     {
-        private readonly MethodInfo _info;
+        public MethodInfo Info { get; private set; }
 
         public MethodActivity(MethodInfo info)
         {
             if(info.DeclaringType == null)
                 throw new ArgumentException("Cannot create a method activity from a method not declared on a concrete type","info");
 
-            _info = info;
+            Info = info;
         }
 
         public string Name
         {
             get
             {
-                Debug.Assert(_info.DeclaringType != null, "_info.DeclaringType != null");
-                return _info.DeclaringType.FullName + "-" + _info.Name;
+                Debug.Assert(Info.DeclaringType != null, "_info.DeclaringType != null");
+                return Info.DeclaringType.FullName + "-" + Info.Name;
             }
         }
     }

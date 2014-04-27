@@ -8,25 +8,26 @@ namespace Swerl.Referee.MVC
 {
     public class AuthorizationFailureManager : IAuthorizationFailureManager
     {
-        private readonly IDictionary<string, ActionResult> _resultsForNamedActivities;
-        private readonly IDictionary<Type, ActionResult> _resultsForTypeActivities;
+        private readonly IList<MVCActivityRegistration> _activityRegistrations;
 
         public AuthorizationFailureManager(IList<MVCActivityRegistration> activityRegistrations)
         {
-            _resultsForNamedActivities = activityRegistrations.ToDictionary(a => a.ActivityName, a => a.FailedResult);
-            _resultsForTypeActivities = activityRegistrations.ToDictionary(a => a.ActivityType, a => a.FailedResult);
+            _activityRegistrations = activityRegistrations;           
         }
 
         public void HandleFailedAuthorization(IActivity activity, ActionExecutingContext actionContext)
         {
-            if (_resultsForTypeActivities.ContainsKey(activity.GetType()))
+            if (activity is MethodActivity && _activityRegistrations.Any(a => a.ActivityMethod == ((MethodActivity)activity).Info))
             {
-                actionContext.Result = _resultsForTypeActivities[activity.GetType()];
+                var registration = _activityRegistrations.Single(a => a.ActivityMethod == ((MethodActivity) activity).Info);
+                actionContext.Result = registration.FailedResult;
             }
-            else if (_resultsForNamedActivities.ContainsKey(activity.Name))
+            else if (_activityRegistrations.Any(a => a.ActivityType == activity.GetType()))
             {
-                actionContext.Result = _resultsForNamedActivities[activity.Name];
-            }
+                actionContext.Result = _activityRegistrations.Single(a => a.ActivityType ==  activity.GetType()).FailedResult;
+            }           
+            else if (activity is NamedActivity && _activityRegistrations.Any(a => a.ActivityName == activity.Name))
+                actionContext.Result = _activityRegistrations.Single(a => a.ActivityName == activity.Name).FailedResult;
             else
                 actionContext.Result = new HttpUnauthorizedResult();
         }
