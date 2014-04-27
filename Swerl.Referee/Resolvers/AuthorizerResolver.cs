@@ -15,17 +15,18 @@ namespace Swerl.Referee.Resolvers
         private readonly IDictionary<Type, Type> _registeredActivities;
         private readonly IDictionary<string, Type> _registeredActivityNames;
 
-        public AuthorizerResolver(IAuthorizerFactory authorizerFactory,IList<ActivityRegistration> activityRegistrations)
+        public AuthorizerResolver(IAuthorizerFactory authorizerFactory,IEnumerable<IActivityRegistration> activityRegistrations)
         {
+            var registrations = activityRegistrations as IActivityRegistration[] ?? activityRegistrations.ToArray();
             var authorizersForTypedActivitiesDictionary =
-                activityRegistrations.Where(a => a.AuthorizerType != null && a.ActivityType != null).ToDictionary(a => a.ActivityType, a => a.AuthorizerType);
+                registrations.Where(a => a.AuthorizerType != null && a.ActivityType != null).ToDictionary(a => a.ActivityType, a => a.AuthorizerType);
             
-            var authorizersForNamedActivitiesDictionary = activityRegistrations
+            var authorizersForNamedActivitiesDictionary = registrations
                 .Where(a => a.AuthorizerType != null && a.ActivityMethod == null).ToDictionary(
                     a => !string.IsNullOrEmpty(a.ActivityName) ? a.ActivityName : a.ActivityType.Name, 
                     a => a.AuthorizerType);            
 
-            var authorizedForMethodActivities = activityRegistrations.Where(a => a.ActivityMethod != null).ToDictionary(
+            var authorizedForMethodActivities = registrations.Where(a => a.ActivityMethod != null).ToDictionary(
                 a => a.ActivityMethod.DeclaringType.FullName +"-"+a.ActivityMethod.Name,
                 a => a.AuthorizerType
                 );

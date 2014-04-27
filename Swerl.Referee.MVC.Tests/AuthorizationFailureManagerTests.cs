@@ -17,7 +17,7 @@ namespace Swerl.Referee.MVC.UnitTests
         [Test]
         public void Ensure_That_The_Failure_Manager_Assigns_A_404_Result_To_An_Unauthorizer_Activity_Registered_By_Type_With_A_404_Handler()
         {
-            var conf = ConfigurationBuilderHelper.BuildConfigurationBuilder();
+            var conf = BuilderHelper.BuildConfigurationBuilder();
             conf.Register(c=> c.As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>().HandleFailureWith<HttpNotFoundResult>());
 
             var context = FilterContextHelper.ContextFromExpression<TestController>(c => c.ControllerAction("test"));
@@ -30,7 +30,7 @@ namespace Swerl.Referee.MVC.UnitTests
         [Test]
         public void Ensure_That_The_Failure_Manager_Assigns_A_404_Result_To_An_Unauthorizer_Activity_Registered_By_Method_With_A_404_Handler()
         {
-            var conf = ConfigurationBuilderHelper.BuildConfigurationBuilder();
+            var conf = BuilderHelper.BuildConfigurationBuilder();
             conf.Register(a => a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).AuthorizedBy<UnauthorizedAuthorizer>().HandleFailureWith<HttpNotFoundResult>());
 
             var context = FilterContextHelper.ContextFromExpression<TestController>(c => c.ControllerAction("test"));
@@ -43,7 +43,7 @@ namespace Swerl.Referee.MVC.UnitTests
         [Test]
         public void Ensure_That_The_Failure_Manager_Assigns_A_404_Result_To_An_Unauthorizer_Activity_Registered_By_Name_With_A_404_Handler()
         {
-            var conf = ConfigurationBuilderHelper.BuildConfigurationBuilder();
+            var conf = BuilderHelper.BuildConfigurationBuilder();
             conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>().HandleFailureWith<HttpNotFoundResult>());
 
             var context = FilterContextHelper.ContextFromExpression<TestController>(c => c.ControllerAction("test"));

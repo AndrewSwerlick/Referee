@@ -6,7 +6,15 @@ using Swerl.Referee.Authorizers;
 
 namespace Swerl.Referee.Configuration
 {
-    public class ActivityRegistration<TActivity> where TActivity : ActivityRegistration<TActivity>
+    public interface IActivityRegistration
+    {
+        string ActivityName { get; set; }
+        MethodInfo ActivityMethod { get; set; }
+        Type ActivityType { get; set; }
+        Type AuthorizerType { get; set; }
+    }
+
+    public class ActivityRegistration<TActivity> : IActivityRegistration where TActivity : ActivityRegistration<TActivity>
     {
         public string ActivityName { get; set; }
         public MethodInfo ActivityMethod { get; set; }

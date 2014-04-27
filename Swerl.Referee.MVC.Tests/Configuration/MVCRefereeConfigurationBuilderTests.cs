@@ -18,7 +18,7 @@ namespace Swerl.Referee.MVC.UnitTests.Configuration
         [Test]
         public void Ensure_We_Can_Register_An_Activity_With_A_Failure_Handler()
         {
-            var conf = ConfigurationBuilderHelper.BuildConfigurationBuilder();
+            var conf = BuilderHelper.BuildConfigurationBuilder();
             conf.Register(c=> c.As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>().HandleFailureWith<HttpNotFoundResult>());
             Assert.That(conf.ActivityRegistrations.First().FailedResult.GetType(), Is.EqualTo(new HttpNotFoundResult().GetType()));
         }

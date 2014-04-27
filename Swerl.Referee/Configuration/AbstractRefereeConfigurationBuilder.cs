@@ -33,8 +33,8 @@ namespace Swerl.Referee.Configuration
 
         public RefereeConfiguration Build()
         {
-            var authorizerResolver = new AuthorizerResolver(_authorizerFactory, ActivityRegistrations.Cast<ActivityRegistration>().ToList());
-            var activityResolver = new ActivityResolver(_activityFactory, ActivityRegistrations.Cast<ActivityRegistration>());
+            var authorizerResolver = new AuthorizerResolver(_authorizerFactory, ActivityRegistrations);
+            var activityResolver = new ActivityResolver(_activityFactory, ActivityRegistrations);
 
             return new RefereeConfiguration(activityResolver, authorizerResolver);
         }

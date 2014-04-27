@@ -12,7 +12,7 @@ namespace Swerl.Referee.MVC
 
         public AuthorizationFailureManager(IList<MVCActivityRegistration> activityRegistrations)
         {
-            _activityRegistrations = activityRegistrations;           
+            _activityRegistrations = activityRegistrations.Where(a=> a.FailedResult != null).ToList();           
         }
 
         public void HandleFailedAuthorization(IActivity activity, ActionExecutingContext actionContext)

@@ -17,7 +17,7 @@ namespace Swerl.Referee.Resolvers
 
         private readonly IDictionary<MethodInfo, Type> _registeredActivityMethods; 
 
-        public ActivityResolver(IActivityFactory activictyFactory, IEnumerable<ActivityRegistration> activityRegistrations)
+        public ActivityResolver(IActivityFactory activictyFactory, IEnumerable<IActivityRegistration> activityRegistrations)
         {
             _activictyFactory = activictyFactory;
 
