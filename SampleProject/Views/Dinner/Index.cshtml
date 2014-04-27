@@ -1,0 +1,20 @@
+﻿@model Swerl.Referee.NerdDinnerSample.Models.ViewModels.DinnerIndexPageViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Dinners</h2>
+
+@if (Model.CanCreateDinner)
+{
+    @Html.ActionLink("Create Dinner","Create","Dinner");
+}
+
+<ul>
+    @foreach (var dinner in Model.Dinners)
+    {
+        <li>@dinner.Name</li>
+    }
+</ul>
+
+

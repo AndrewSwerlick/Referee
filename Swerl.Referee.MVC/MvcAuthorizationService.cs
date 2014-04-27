@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Mvc.Async;
 using Swerl.Referee.Core;
 using Swerl.Referee.Core.Activities;
 using Swerl.Referee.Core.Resolvers;
@@ -32,10 +34,22 @@ namespace Swerl.Referee.MVC
             IActivity activity = null;
             var descriptor = context.ActionDescriptor;
 
-            var reflectedDescriptior = (ReflectedActionDescriptor)descriptor;
+            MethodInfo info = null;
+            if(descriptor is ReflectedActionDescriptor)
+                info = ((ReflectedActionDescriptor)descriptor).MethodInfo;
+            else if (descriptor is TaskAsyncActionDescriptor)
+                info = ((TaskAsyncActionDescriptor) descriptor).TaskMethodInfo;
+            else
+                throw new InvalidOperationException("Action descriptor is not of an expected type. Unsure how to extract method information");
+
             var instance = Expression.Parameter(context.Controller.GetType(),"inst");
-            var methodExpression = Expression.Call(instance, reflectedDescriptior.MethodInfo,
-                context.ActionParameters.Select(a => Expression.Constant(a.Value)));
+            var parameterExpressions = context.ActionParameters.Select(a =>
+            {
+                var parameterDescriptor = context.ActionDescriptor.GetParameters().Single(p => p.ParameterName == a.Key);
+                return Expression.Constant(a.Value, parameterDescriptor.ParameterType);
+            });
+
+            var methodExpression = Expression.Call(instance, info, parameterExpressions);
 
             var expression = Expression.Lambda(methodExpression);
 
