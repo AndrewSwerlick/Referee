@@ -23,7 +23,7 @@ namespace Swerl.Referee.MVC.Factories
 
         public IActivityAuthorizer BuildDefaultAuthorizer()
         {
-            return new DefaultAuthorizer();
+            return new AllowAnonymous();
         }
     }
 }

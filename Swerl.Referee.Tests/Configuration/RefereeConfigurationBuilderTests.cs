@@ -55,7 +55,7 @@ namespace Swerl.Referee.UnitTests.Configuration
         {
             var conf = BuildConfigurationObject();
             conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
-            conf.Register(a => a.Name("Test").AuthorizedBy<DefaultAuthorizer>());
+            conf.Register(a => a.Name("Test").AuthorizedBy<AllowAnonymous>());
             Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
             Assert.That(conf.ActivityRegistrations.First().AuthorizerTypes.Count, Is.EqualTo(2));
         }
@@ -65,7 +65,7 @@ namespace Swerl.Referee.UnitTests.Configuration
         {
             var conf = BuildConfigurationObject();
             conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
-            conf.Register(a => a.Name("Test").AuthorizedBy<DefaultAuthorizer>());
+            conf.Register(a => a.Name("Test").AuthorizedBy<AllowAnonymous>());
             Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
             Assert.That(conf.ActivityRegistrations.First().AuthorizerTypes.Count, Is.EqualTo(2));
         }
@@ -95,7 +95,7 @@ namespace Swerl.Referee.UnitTests.Configuration
         {
             var conf = BuildConfigurationObject();
             conf.RegisterClassMethods<TestCodeClass>(a=> a.AuthorizedBy<UnauthorizedAuthorizer>());
-            conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).AuthorizedBy<DefaultAuthorizer>());
+            conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).AuthorizedBy<AllowAnonymous>());
             
             Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(2));
             Assert.That(conf.ActivityRegistrations.Single(a=> a.ActivityMethod.Name == "DoSomething").AuthorizerTypes.Count, Is.EqualTo(2));

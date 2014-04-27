@@ -18,7 +18,7 @@ namespace Swerl.Referee.UnitTests.TestClasses
 
         public IActivityAuthorizer BuildDefaultAuthorizer()
         {
-            return new DefaultAuthorizer();
+            return new AllowAnonymous();
         }
     }
 }

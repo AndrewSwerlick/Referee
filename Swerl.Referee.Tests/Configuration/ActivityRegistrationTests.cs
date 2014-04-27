@@ -10,8 +10,8 @@ namespace Swerl.Referee.UnitTests.Configuration
         [Test]
         public void Ensure_We_Can_Fluently_Register_An_Authorizer_For_An_Activity_Registration()
         {
-            var registration = new ActivityRegistration().AuthorizedBy<DefaultAuthorizer>();
-            Assert.That(registration.AuthorizerTypes.First(), Is.EqualTo(typeof (DefaultAuthorizer)));
+            var registration = new ActivityRegistration().AuthorizedBy<AllowAnonymous>();
+            Assert.That(registration.AuthorizerTypes.First(), Is.EqualTo(typeof (AllowAnonymous)));
         }
     }
 }

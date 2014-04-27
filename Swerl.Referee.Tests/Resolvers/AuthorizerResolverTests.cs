@@ -101,10 +101,10 @@ namespace Swerl.Referee.UnitTests.Resolvers
             Ensure_When_We_Try_To_Resolve_An_Authorizer_For_An_Unregistered_Method_Activity_We_Get_The_Default_Authorizer
             ()
         {
-            var resolver = BuildAuthorizerResolver(new ActivityRegistration[]{});
+            var resolver = BuildAuthorizerResolver(new ActivityRegistration[] {});
             var authorizer = resolver.GetAuthorizers(new MethodActivity(typeof(TestCodeClass).GetMethod("DoSomething"))).First();
 
-            Assert.That(authorizer is DefaultAuthorizer);
+            Assert.That(authorizer is AllowAnonymous);
         }          
 
         private AuthorizerResolver BuildAuthorizerResolver(IList<ActivityRegistration> registrations)

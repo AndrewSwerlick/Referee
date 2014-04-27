@@ -3,7 +3,7 @@ using Swerl.Referee.Core.Activities;
 
 namespace Swerl.Referee.Core.Authorizers
 {
-    public class DefaultAuthorizer : IActivityAuthorizer
+    public class AllowAnonymous : IActivityAuthorizer
     {
         public bool Authorize(IActivity activity, IPrincipal user)
         {
