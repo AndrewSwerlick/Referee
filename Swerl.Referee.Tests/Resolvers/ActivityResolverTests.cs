@@ -120,7 +120,21 @@ namespace Swerl.Referee.UnitTests.Resolvers
 
             Assert.That(act1 is TestActivity);
             Assert.That(act2 is TestActivity2);
-        }       
+        }
+
+        [Test]
+        public void
+            Ensure_When_We_Register_A_Method_As_A_Specific_Activity_Type_Ensure_When_We_Resolve_By_Lamdba_Expression_The_Method_Parameters_Are_Used_In_The_Type_Constructor
+            ()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+
+            var resolver = BuildActivityResolver(conf.ActivityRegistrations);
+            var act = (TestActivity)resolver.GetActivity<TestCodeClass>(c => c.DoSomething("test"));
+
+            Assert.That(act.Id, Is.EqualTo("test"));
+        }
 
         protected ActivityResolver BuildActivityResolver(IEnumerable<ActivityRegistration> registrations)
         {
