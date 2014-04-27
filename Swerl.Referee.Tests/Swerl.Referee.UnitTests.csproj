@@ -62,9 +62,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Swerl.Referee\Swerl.Referee.csproj">
+    <ProjectReference Include="..\Swerl.Referee\Swerl.Referee.Core.csproj">
       <Project>{1715609E-5D36-44EF-8850-452D7F0956F3}</Project>
-      <Name>Swerl.Referee</Name>
+      <Name>Swerl.Referee.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

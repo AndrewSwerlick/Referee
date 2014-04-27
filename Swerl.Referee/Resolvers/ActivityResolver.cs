@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Configuration;
-using Swerl.Referee.Extensions;
-using Swerl.Referee.Factories;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Configuration;
+using Swerl.Referee.Core.Extensions;
+using Swerl.Referee.Core.Factories;
 
-namespace Swerl.Referee.Resolvers
+namespace Swerl.Referee.Core.Resolvers
 {
     public class ActivityResolver : IActivityResolver
     {

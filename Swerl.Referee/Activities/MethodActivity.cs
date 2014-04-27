@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Swerl.Referee.Activities
+namespace Swerl.Referee.Core.Activities
 {
     public class MethodActivity : IActivity
     {

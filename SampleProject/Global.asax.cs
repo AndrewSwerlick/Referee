@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Swerl.Referee.Authorizers;
+using Swerl.Referee.Core.Authorizers;
 
 namespace Swerl.Referee.NerdDinnerSample
 {

@@ -5,6 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Swerl.Referee.Core;
 
 namespace Swerl.Referee.MVC
 {

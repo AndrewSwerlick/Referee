@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Swerl.Referee.Authorizers;
-using Swerl.Referee.Factories;
+using Swerl.Referee.Core.Authorizers;
+using Swerl.Referee.Core.Factories;
 
 namespace Swerl.Referee.MVC.Factories
 {

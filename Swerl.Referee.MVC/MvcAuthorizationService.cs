@@ -6,8 +6,9 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Resolvers;
+using Swerl.Referee.Core;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Resolvers;
 
 namespace Swerl.Referee.MVC
 {

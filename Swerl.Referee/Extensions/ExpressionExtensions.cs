@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Swerl.Referee.Extensions
+namespace Swerl.Referee.Core.Extensions
 {
     public static class ExpressionExtensions
     {

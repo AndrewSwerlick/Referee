@@ -2,11 +2,11 @@
 using System.Web.Mvc;
 using Moq;
 using NUnit.Framework;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Authorizers;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Authorizers;
+using Swerl.Referee.Core.Resolvers;
 using Swerl.Referee.MVC.UnitTests.Helpers;
 using Swerl.Referee.MVC.UnitTests.TestClasses;
-using Swerl.Referee.Resolvers;
 using Swerl.Referee.UnitTests.TestClasses;
 
 namespace Swerl.Referee.MVC.UnitTests

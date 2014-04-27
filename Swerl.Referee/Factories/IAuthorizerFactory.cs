@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Swerl.Referee.Authorizers;
+using Swerl.Referee.Core.Authorizers;
 
-namespace Swerl.Referee.Factories
+namespace Swerl.Referee.Core.Factories
 {
     public interface IAuthorizerFactory
     {

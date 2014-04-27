@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Factories;
-using Swerl.Referee.Resolvers;
+using Swerl.Referee.Core.Factories;
+using Swerl.Referee.Core.Resolvers;
 
-namespace Swerl.Referee.Configuration
+namespace Swerl.Referee.Core.Configuration
 {
     public abstract class AbstractRefereeConfigurationBuilder<TRegistration> where TRegistration : ActivityRegistration<TRegistration>
     {

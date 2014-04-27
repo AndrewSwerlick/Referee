@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Principal;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Resolvers;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Resolvers;
 
-namespace Swerl.Referee
+namespace Swerl.Referee.Core
 {
     public class AuthorizationService : IAuthorizationService
     {

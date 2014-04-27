@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using NUnit.Framework;
-using Swerl.Referee.Activities;
+using Swerl.Referee.Core.Activities;
 using Swerl.Referee.MVC.UnitTests.Helpers;
 using Swerl.Referee.MVC.UnitTests.TestClasses;
 using Swerl.Referee.UnitTests.TestClasses;

@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Async;
 using Moq;
-using Swerl.Referee.Extensions;
+using Swerl.Referee.Core.Extensions;
 using Swerl.Referee.MVC.UnitTests.TestClasses;
 using Swerl.Referee.UnitTests.TestClasses;
 

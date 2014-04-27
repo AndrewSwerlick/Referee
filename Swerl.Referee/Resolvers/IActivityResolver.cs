@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Swerl.Referee.Activities;
+using Swerl.Referee.Core.Activities;
 
-namespace Swerl.Referee.Resolvers
+namespace Swerl.Referee.Core.Resolvers
 {
     public interface IActivityResolver
     {

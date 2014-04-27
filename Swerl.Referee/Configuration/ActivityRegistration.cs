@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Reflection;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Authorizers;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Authorizers;
 
-namespace Swerl.Referee.Configuration
+namespace Swerl.Referee.Core.Configuration
 {
     public interface IActivityRegistration
     {

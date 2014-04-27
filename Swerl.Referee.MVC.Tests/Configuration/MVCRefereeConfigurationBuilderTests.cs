@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using NUnit.Framework;
-using Swerl.Referee.Factories;
 using Swerl.Referee.MVC.Configuration;
 using Swerl.Referee.MVC.Factories;
 using Swerl.Referee.MVC.UnitTests.Helpers;

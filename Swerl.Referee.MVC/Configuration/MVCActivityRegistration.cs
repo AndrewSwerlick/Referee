@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Swerl.Referee.Configuration;
+using Swerl.Referee.Core.Configuration;
 
 namespace Swerl.Referee.MVC
 {

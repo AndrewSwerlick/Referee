@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Swerl.Referee.Configuration;
+using Swerl.Referee.Core.Factories;
 using Swerl.Referee.MVC.Configuration;
-using Swerl.Referee.Factories;
 using Swerl.Referee.MVC.Factories;
 
 namespace Swerl.Referee.MVC

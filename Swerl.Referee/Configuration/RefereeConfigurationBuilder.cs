@@ -1,6 +1,6 @@
-﻿using Swerl.Referee.Factories;
+﻿using Swerl.Referee.Core.Factories;
 
-namespace Swerl.Referee.Configuration
+namespace Swerl.Referee.Core.Configuration
 {
     public class RefereeConfigurationBuilder : AbstractRefereeConfigurationBuilder<ActivityRegistration>
     {

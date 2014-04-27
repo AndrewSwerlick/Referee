@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Authorizers;
-using Swerl.Referee.Configuration;
-using Swerl.Referee.Factories;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Authorizers;
+using Swerl.Referee.Core.Configuration;
+using Swerl.Referee.Core.Factories;
 
-namespace Swerl.Referee.Resolvers
+namespace Swerl.Referee.Core.Resolvers
 {
     public class AuthorizerResolver : IAuthorizerResolver
     {

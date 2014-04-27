@@ -1,7 +1,7 @@
 ﻿using System.Security.Principal;
-using Swerl.Referee.Activities;
+using Swerl.Referee.Core.Activities;
 
-namespace Swerl.Referee.Authorizers
+namespace Swerl.Referee.Core.Authorizers
 {
     public abstract class AbstractActivityAuthorizer<T> : IActivityAuthorizer where T:IActivity
     {

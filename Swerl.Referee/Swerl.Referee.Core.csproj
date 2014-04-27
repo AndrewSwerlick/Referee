@@ -7,8 +7,8 @@
     <ProjectGuid>{1715609E-5D36-44EF-8850-452D7F0956F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Swerl.Referee</RootNamespace>
-    <AssemblyName>Swerl.Referee</AssemblyName>
+    <RootNamespace>Swerl.Referee.Core</RootNamespace>
+    <AssemblyName>Swerl.Referee.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

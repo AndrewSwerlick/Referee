@@ -1,4 +1,4 @@
-﻿namespace Swerl.Referee.Activities
+﻿namespace Swerl.Referee.Core.Activities
 {
     public class NamedActivity : IActivity
     {

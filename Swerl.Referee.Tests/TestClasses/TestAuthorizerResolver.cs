@@ -1,6 +1,6 @@
 ﻿using System;
-using Swerl.Referee.Authorizers;
-using Swerl.Referee.Factories;
+using Swerl.Referee.Core.Authorizers;
+using Swerl.Referee.Core.Factories;
 
 namespace Swerl.Referee.UnitTests.TestClasses
 {

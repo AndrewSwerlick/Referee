@@ -1,7 +1,7 @@
 ﻿using System;
-using Swerl.Referee.Activities;
+using Swerl.Referee.Core.Activities;
 
-namespace Swerl.Referee.Factories
+namespace Swerl.Referee.Core.Factories
 {
     public class ActivityFactory : IActivityFactory
     {

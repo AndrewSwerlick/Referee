@@ -3,10 +3,10 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Principal;
 using NUnit.Framework;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Authorizers;
-using Swerl.Referee.Configuration;
-using Swerl.Referee.Resolvers;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Authorizers;
+using Swerl.Referee.Core.Configuration;
+using Swerl.Referee.Core.Resolvers;
 using Swerl.Referee.UnitTests.TestClasses;
 
 namespace Swerl.Referee.UnitTests.Resolvers

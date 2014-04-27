@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
-using Swerl.Referee.Authorizers;
-using Swerl.Referee.Configuration;
-using Swerl.Referee.Factories;
+using Swerl.Referee.Core;
+using Swerl.Referee.Core.Configuration;
+using Swerl.Referee.Core.Factories;
 using Swerl.Referee.UnitTests.TestClasses;
 
 namespace Swerl.Referee.UnitTests

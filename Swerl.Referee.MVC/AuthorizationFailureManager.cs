@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Swerl.Referee.Activities;
+using Swerl.Referee.Core.Activities;
 
 namespace Swerl.Referee.MVC
 {

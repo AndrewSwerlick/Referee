@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
-using Swerl.Referee.Authorizers;
-using Swerl.Referee.Configuration;
+using Swerl.Referee.Core.Authorizers;
+using Swerl.Referee.Core.Configuration;
 
 namespace Swerl.Referee.UnitTests.Configuration
 {

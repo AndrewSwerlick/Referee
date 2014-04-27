@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Swerl.Referee.Activities;
-using Swerl.Referee.Authorizers;
+using Swerl.Referee.Core.Activities;
+using Swerl.Referee.Core.Authorizers;
 
-namespace Swerl.Referee.Resolvers
+namespace Swerl.Referee.Core.Resolvers
 {
     public interface IAuthorizerResolver
     {

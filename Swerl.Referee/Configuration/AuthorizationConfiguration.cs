@@ -1,6 +1,6 @@
-﻿using Swerl.Referee.Resolvers;
+﻿using Swerl.Referee.Core.Resolvers;
 
-namespace Swerl.Referee.Configuration
+namespace Swerl.Referee.Core.Configuration
 {
     public class RefereeConfiguration
     {
