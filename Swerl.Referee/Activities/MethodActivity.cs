@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Swerl.Referee.Activities
 {
-    class MethodActivity : IActivity
+    public class MethodActivity : IActivity
     {
         private readonly MethodInfo _info;
 

@@ -50,14 +50,7 @@ namespace Swerl.Referee.Resolvers
 
         public IActivity GetActivity<T>(Expression<Action<T>> expression)
         {
-            var method = expression.GetMethodInfor();
-            if (_registeredActivityMethods.ContainsKey(method))
-                return GetActivity(_registeredActivityMethods[method], expression.GetMethodParams());
-
-            var info = expression.GetMethodInfor();
-            var uniqueName = info.Name + "-" + info.DeclaringType.Name;
-
-            return GetActivity(uniqueName);
+            return GetActivity((LambdaExpression) expression);           
         }
 
         public IActivity GetActivity(LambdaExpression expression)

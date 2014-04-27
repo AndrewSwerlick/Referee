@@ -21,8 +21,8 @@ namespace SampleProject
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             Referee.Configure((builder) =>
             {
-                builder.Register("Test").AuthorizedBy<DefaultAuthorizer>().HandleFailureWith<HttpNotFoundResult>();
-                builder.Register("Test2").AuthorizedBy<DefaultAuthorizer>();
+                builder.Register(c=> c.Name("Test").AuthorizedBy<DefaultAuthorizer>().HandleFailureWith<HttpNotFoundResult>());
+                builder.Register(c=> c.Name("Test2").AuthorizedBy<DefaultAuthorizer>());
             });
         }
     }

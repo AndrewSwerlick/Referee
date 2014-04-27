@@ -76,7 +76,6 @@
     <Compile Include="IAuthorizationFailureManager.cs" />
     <Compile Include="IMvcAuthorizationService.cs" />
     <Compile Include="MvcAuthorizationService.cs" />
-    <Compile Include="MVCExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Referee.cs" />
   </ItemGroup>

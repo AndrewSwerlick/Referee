@@ -1,27 +1,46 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using Swerl.Referee.Activities;
 using Swerl.Referee.Authorizers;
 
 namespace Swerl.Referee.Configuration
 {
-    public class ActivityRegistration
+    public class ActivityRegistration<TActivity> where TActivity : ActivityRegistration<TActivity>
     {
         public string ActivityName { get; set; }
         public MethodInfo ActivityMethod { get; set; }
         public Type ActivityType { get; set; }
         public Type AuthorizerType { get; set; }
 
-        public ActivityRegistration AuthorizedBy<T>() where T : IActivityAuthorizer
+        public TActivity AuthorizedBy<T>() where T : IActivityAuthorizer
         {
             AuthorizerType = typeof (T);
-            return this;
+            return (TActivity)this;
         }
 
-        public ActivityRegistration As<T>() where T : IActivity
+        public TActivity As<T>() where T : IActivity
         {
             ActivityType = typeof (T);
-            return this;
+            return (TActivity)this;
         }
+
+        public TActivity Name(string name)
+        {
+            ActivityName = name;
+            return (TActivity)this;
+        }
+
+        public TActivity Method<T>(Expression<Action<T>> expression)
+        {
+            var method = (MethodCallExpression) expression.Body;
+            ActivityMethod = method.Method;
+            return (TActivity) this;
+        }
+    }
+
+    public class ActivityRegistration : ActivityRegistration<ActivityRegistration>
+    {
+        
     }
 }

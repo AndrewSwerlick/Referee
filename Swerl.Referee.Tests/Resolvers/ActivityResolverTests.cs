@@ -8,7 +8,7 @@ using Swerl.Referee.UnitTests.TestClasses;
 namespace Swerl.Referee.UnitTests.Resolvers
 {
     public class ActivityResolverTests
-    {       
+    {      
         [Test]
         public void Ensure_We_Can_Resolve_A_Named_Activity_By_Name()
         {
@@ -72,7 +72,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
         public void Ensure_We_Can_Resolve_An_Activity_By_Expression()
         {
             var conf = BuildConfigurationObject();
-            conf.Register<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>();
+            conf.Register(a=> a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
 
@@ -85,7 +85,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
         public void Ensure_We_Can_Resolve_An_Activity_By_Expression_With_A_Variable()
         {
             var conf = BuildConfigurationObject();
-            conf.Register<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>();
+            conf.Register(a=> a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
             var test = "test";
@@ -97,7 +97,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
         public void Ensure_We_Can_Resolve_An_Activity_By_Expression_With_A_Complex_Expression()
         {
             var conf = BuildConfigurationObject();
-            conf.Register<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>();
+            conf.Register(a=> a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
             var test = "test";
@@ -111,8 +111,8 @@ namespace Swerl.Referee.UnitTests.Resolvers
             ()
         {
             var conf = BuildConfigurationObject();
-            conf.Register<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>();
-            conf.Register<TestCodeClass2>(c => c.DoSomething(default(string))).As<TestActivity2>();
+            conf.Register(a=> a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>());
+            conf.Register(a=> a.Method<TestCodeClass2>(c => c.DoSomething(default(string))).As<TestActivity2>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
             var act1 = resolver.GetActivity<TestCodeClass>(c => c.DoSomething("test"));
@@ -120,20 +120,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
 
             Assert.That(act1 is TestActivity);
             Assert.That(act2 is TestActivity2);
-        }
-
-        [Test]
-        public void Ensure_We_Can_Register_An_Activity_By_Name_And_Resolve_It_By_Expression()
-        {
-            //arrange
-            var conf = BuildConfigurationObject();
-            conf.Register("DoSomething");
-
-            var resolver = BuildActivityResolver(conf.ActivityRegistrations);
-            var activity = resolver.GetActivity<TestCodeClass>(c => c.DoSomething("test"));
-
-            Assert.That(activity.Name, Is.EqualTo("DoSomething-TestCodeClass"));
-        }
+        }       
 
         protected ActivityResolver BuildActivityResolver(IEnumerable<ActivityRegistration> registrations)
         {

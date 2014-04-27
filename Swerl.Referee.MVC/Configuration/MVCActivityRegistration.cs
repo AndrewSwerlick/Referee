@@ -8,8 +8,20 @@ using Swerl.Referee.Configuration;
 
 namespace Swerl.Referee.MVC
 {
-    public class MVCActivityRegistration : ActivityRegistration
+    public class MVCActivityRegistration : ActivityRegistration<MVCActivityRegistration>
     {
         public ActionResult FailedResult { get; set; }
+
+        public MVCActivityRegistration HandleFailureWith<T>() where T : ActionResult
+        {
+            FailedResult = Activator.CreateInstance<T>();
+            return this;
+        }
+
+        public MVCActivityRegistration HandleFailureWith(ActionResult result)
+        {
+            FailedResult = result;
+            return this;
+        }
     }
 }
