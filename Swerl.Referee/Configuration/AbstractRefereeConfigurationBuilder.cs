@@ -58,16 +58,17 @@ namespace Swerl.Referee.Configuration
             var typeChanged = existingRegistration.ActivityType != newRegistration.ActivityType &&
                               !(existingRegistration.ActivityType == null || newRegistration.ActivityType == null);
 
-            if (existingRegistration.ActivityMethod == newRegistration.ActivityMethod && typeChanged)
+            if (typeChanged)
                 throw new InvalidRegistrationException(
                     string.Format(
-                        "Cannot register the same method twice as two different activity types. Tried to register {0} as both {1} and {2}.",
+                        "Cannot register the same activity twice as two different activity types. Tried to register {0} as both {1} and {2}.",
                         newRegistration.ActivityMethod.Name, existingRegistration.ActivityType.FullName,
                         newRegistration.ActivityType.FullName));
 
             foreach (var authorizerType in newRegistration.AuthorizerTypes)
             {
-                existingRegistration.AuthorizerTypes.Add(authorizerType);
+                if(!existingRegistration.AuthorizerTypes.Contains(authorizerType))
+                    existingRegistration.AuthorizerTypes.Add(authorizerType);
             }
         }
 
@@ -76,14 +77,29 @@ namespace Swerl.Referee.Configuration
             if (!registration.AuthorizerTypes.Any())
                 throw new InvalidRegistrationException("All registrations must have an AuthorizerType. Set this value by calling ActivityRegistration.AuthorizedBy");
 
-            if (registration.ActivityMethod != null && ActivityRegistrations.Any(a => a.ActivityMethod == registration.ActivityMethod))
-                ModifyExistingRegistration(ActivityRegistrations.Single(a => a.ActivityMethod == registration.ActivityMethod), registration);
+            if (registration.ActivityMethod != null &&
+                ActivityRegistrations.Any(a => a.ActivityMethod == registration.ActivityMethod))
+            {
+                ModifyExistingRegistration(
+                    ActivityRegistrations.Single(a => a.ActivityMethod == registration.ActivityMethod), registration);
+                return;
+            }
 
-            if (registration.ActivityMethod == null && registration.ActivityType != null && ActivityRegistrations.Any(a => a.ActivityType == registration.ActivityType))
-                throw new InvalidRegistrationException("Cannot register the same type twice unless you specify a different method. Either remove one registration or specify unique methods with the ActivityRegistration.Method method");
+            if (registration.ActivityMethod == null && registration.ActivityType != null &&
+                ActivityRegistrations.Any(a => a.ActivityType == registration.ActivityType))
+            {
+                ModifyExistingRegistration(
+                    ActivityRegistrations.Single(a => a.ActivityType == registration.ActivityType), registration);
+                return;
+            }
 
-            if (registration.ActivityMethod == null && registration.ActivityName != null && ActivityRegistrations.Any(a => a.ActivityName == registration.ActivityName))
-                throw new InvalidRegistrationException("Cannot register the same type name unless you specify a different method. Either remove one registration or specify unique methods with the ActivityRegistration.Method method");
+            if (registration.ActivityMethod == null && registration.ActivityName != null &&
+                ActivityRegistrations.Any(a => a.ActivityName == registration.ActivityName))
+            {
+                ModifyExistingRegistration(
+                    ActivityRegistrations.Single(a => a.ActivityName == registration.ActivityName), registration);
+                return;
+            }
 
             ActivityRegistrations.Add(registration);
         }

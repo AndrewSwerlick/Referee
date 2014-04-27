@@ -49,22 +49,25 @@ namespace Swerl.Referee.UnitTests.Configuration
             Assert.Throws<InvalidRegistrationException>(()=>conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity2>().AuthorizedBy<UnauthorizedAuthorizer>()));
         }
 
-        [Test]
-        public void Ensure_That_If_We_Try_To_Register_The_Same_Type_Twice_Without_Method_Information_It_Throws_An_Exception()
-        {
-            var conf = BuildConfigurationObject();
-            conf.Register(a => a.As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
-
-            Assert.Throws<InvalidRegistrationException>(() => conf.Register(a => a.As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>()));
-        }
 
         [Test]
-        public void Ensure_That_If_We_Try_To_Register_The_Same_Name_Twice_Without_Method_Information_It_Throws_An_Exception()
+        public void Ensure_That_If_We_Try_To_Register_The_Same_Name_Twice_It_Combines_The_Authorize_Types()
         {
             var conf = BuildConfigurationObject();
             conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
+            conf.Register(a => a.Name("Test").AuthorizedBy<DefaultAuthorizer>());
+            Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
+            Assert.That(conf.ActivityRegistrations.First().AuthorizerTypes.Count, Is.EqualTo(2));
+        }
 
-            Assert.Throws<InvalidRegistrationException>(() => conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>()));
+        [Test]
+        public void Ensure_That_If_We_Try_To_Register_The_Same_Name_Twice_With_Duplicate_Authorizer_Types_The_Authorizer_Types_List_Contains_One_Items()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
+            conf.Register(a => a.Name("Test").AuthorizedBy<DefaultAuthorizer>());
+            Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
+            Assert.That(conf.ActivityRegistrations.First().AuthorizerTypes.Count, Is.EqualTo(2));
         }
 
         [Test]
@@ -94,7 +97,8 @@ namespace Swerl.Referee.UnitTests.Configuration
             conf.RegisterClassMethods<TestCodeClass>(a=> a.AuthorizedBy<UnauthorizedAuthorizer>());
             conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).AuthorizedBy<DefaultAuthorizer>());
             
-            Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(3));
+            Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(2));
+            Assert.That(conf.ActivityRegistrations.Single(a=> a.ActivityMethod.Name == "DoSomething").AuthorizerTypes.Count, Is.EqualTo(2));
         }
 
         private RefereeConfigurationBuilder BuildConfigurationObject()
