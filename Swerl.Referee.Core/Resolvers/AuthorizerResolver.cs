@@ -25,6 +25,7 @@ namespace Swerl.Referee.Core.Resolvers
         {
             IActivityRegistration registration = null;
             var registrations = _activityRegistrations.Where(a => a.ActivityType == activity.GetType()).ToList();
+            IList<KeyValuePair<Type, Action<IActivityAuthorizer>>> types = null;
 
             if (registrations.Count() == 1)            
                 registration = registrations.First();            
@@ -37,7 +38,13 @@ namespace Swerl.Referee.Core.Resolvers
                 registration = _activityRegistrations.SingleOrDefault(r => r.ActivityName == activity.Name);
 
             if (registration != null)
-                return BuildAuthorizers(registration.AuthorizerTypes);
+                types = registration.AuthorizerTypes;
+
+            if(types!= null && types.Any(a=> a.Key == typeof(AllowAnonymous)))
+                types = new[]{new KeyValuePair<Type, Action<IActivityAuthorizer>>(typeof(AllowAnonymous),null)};
+
+            if(types!= null)
+                return BuildAuthorizers(types);
 
             return new[] {_authorizerFactory.BuildDefaultAuthorizer()};
         }

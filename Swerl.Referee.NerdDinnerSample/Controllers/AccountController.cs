@@ -1,6 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Antlr.Runtime.Misc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -17,17 +21,28 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         [AuthorizationRegistration]
         public static void RegisterAuth(MVCRefereeConfigurationBuilder configuration)
         {
-            configuration.RegisterClassMethods<AccountController>(a=> a.AuthorizedBy<Authenticated>());
+            configuration.RegisterClassMethods<AccountController>(a=> a.AuthorizedBy<Authenticated>());           
+
+            //Overriding the login action since it needs to be anonymous. By calling AuthorizedBy<AllowAnonymous> all other registered authorizers will be ignored
+            configuration.Register(a=> a.Method<AccountController>(c=> c.Login("")).AuthorizedBy<AllowAnonymous>());
+
+            //For streamlined syntax, multiple methods can be registered using a foreach syntax
+            var anonymousMethods = new List<Expression<Action<AccountController>>>
+            {
+                c => c.Login(""),
+                c => c.Login(null, ""),
+                c => c.Register(default(RegisterViewModel)),
+                c => c.Register(),
+                c => c.ExternalLogin("", ""),
+                c => c.ExternalLoginCallback(""),
+                c => c.ExternalLoginConfirmation(null, ""),
+                c => c.ExternalLoginFailure()
+            };
+            foreach (var anonymousMethod in anonymousMethods)
+            {
+                configuration.Register(a => a.Method(anonymousMethod).AuthorizedBy<AllowAnonymous>());
+            }
             
-            //Overriding all actions that need to be anonymous
-            configuration.Register(a=> a.Method<AccountController>(c=> c.Login(default(string))).AuthorizedBy<AllowAnonymous>());
-            configuration.Register(a => a.Method<AccountController>(c => c.Login(default(LoginViewModel), default(string))).AuthorizedBy<AllowAnonymous>());
-            configuration.Register(a => a.Method<AccountController>(c => c.Register(default(RegisterViewModel))).AuthorizedBy<AllowAnonymous>());
-            configuration.Register(a => a.Method<AccountController>(c => c.Register()).AuthorizedBy<AllowAnonymous>());
-            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLogin(default(string),default(string))).AuthorizedBy<AllowAnonymous>());
-            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLoginCallback(default(string))).AuthorizedBy<AllowAnonymous>());
-            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLoginConfirmation(default(ExternalLoginConfirmationViewModel),default(string))).AuthorizedBy<AllowAnonymous>());
-            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLoginFailure()).AuthorizedBy<AllowAnonymous>());
         }
 
         public AccountController()

@@ -54,7 +54,7 @@ namespace Swerl.Referee.Tests.Configuration
         {
             var conf = BuildConfigurationObject();
             conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
-            conf.Register(a => a.Name("Test").AuthorizedBy<AllowAnonymous>());
+            conf.Register(a => a.Name("Test").AuthorizedBy<HasRoles>());
             Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
             Assert.That(conf.ActivityRegistrations.First().AuthorizerTypes.Count, Is.EqualTo(2));
         }

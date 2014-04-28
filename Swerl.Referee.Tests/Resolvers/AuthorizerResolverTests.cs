@@ -136,6 +136,21 @@ namespace Swerl.Referee.Tests.Resolvers
             Assert.That(authorizer is UnauthorizedAuthorizer);
         }
 
+        [Test]
+        public void
+            Ensure_That_If_A_Method_Activity_Has_Been_Registered_With_The_Allow_Anonymous_Authorizer_That_Is_The_Only_One_The_Authorizer_Resolver_Returns
+            ()
+        {
+            var conf = BuilderHelper.BuildConfigurationObject();
+            conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).AuthorizedBy<UnauthorizedAuthorizer>());
+            conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).AuthorizedBy<AllowAnonymous>());
+
+            var resolver = BuildAuthorizerResolver(conf.ActivityRegistrations);
+            var authorizers = resolver.GetAuthorizers(new MethodActivity(typeof(TestCodeClass).GetMethod("DoSomething")));
+
+            Assert.That(authorizers.Count, Is.EqualTo(1));
+        }
+
         private AuthorizerResolver BuildAuthorizerResolver(IList<ActivityRegistration> registrations)
         {           
             return new AuthorizerResolver(new TestAuthorizerFactory(), registrations);
