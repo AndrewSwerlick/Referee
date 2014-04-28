@@ -25,7 +25,7 @@ namespace Swerl.Referee.Core.Extensions
             return methodExpression.Arguments.Select(GetValue).ToArray();
         }
 
-        public static MethodInfo GetMethodInfor(this LambdaExpression expression)
+        public static MethodInfo GetMethodInfo(this LambdaExpression expression)
         {
             if (!(expression.Body is MethodCallExpression))
                 throw new ArgumentException("Expression must be a method call", "expression");

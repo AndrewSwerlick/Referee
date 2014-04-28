@@ -2,6 +2,6 @@
 {
     public interface IActivity
     {
-        string Name { get; }
+        string Name { get; set; }
     }
 }

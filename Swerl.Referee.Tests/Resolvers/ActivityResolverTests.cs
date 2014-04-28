@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
+using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.Core.Factories;
 using Swerl.Referee.Core.Resolvers;
+using Swerl.Referee.UnitTests.Helpers;
 using Swerl.Referee.UnitTests.TestClasses;
 
 namespace Swerl.Referee.UnitTests.Resolvers
@@ -12,7 +14,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
         [Test]
         public void Ensure_We_Can_Resolve_A_Named_Activity_By_Name()
         {
-            var config = BuildConfigurationObject();
+            var config = BuilderHelper.BuildConfigurationObject();
 
             var resolver = BuildActivityResolver(new List<ActivityRegistration>(){new ActivityRegistration
             {
@@ -71,7 +73,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
         [Test]
         public void Ensure_We_Can_Resolve_An_Activity_By_Expression()
         {
-            var conf = BuildConfigurationObject();
+            var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
@@ -84,7 +86,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
         [Test]
         public void Ensure_We_Can_Resolve_An_Activity_By_Expression_With_A_Variable()
         {
-            var conf = BuildConfigurationObject();
+            var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
@@ -96,7 +98,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
         [Test]
         public void Ensure_We_Can_Resolve_An_Activity_By_Expression_With_A_Complex_Expression()
         {
-            var conf = BuildConfigurationObject();
+            var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
@@ -110,7 +112,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
             Ensure_When_We_Register_Two_Methods_With_The_Same_Names_As_Different_Activities_We_Can_Resolve_Each_Individually
             ()
         {
-            var conf = BuildConfigurationObject();
+            var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
             conf.Register(a => a.Method<TestCodeClass2>(c => c.DoSomething(default(string))).As<TestActivity2>().AuthorizedBy<UnauthorizedAuthorizer>());
 
@@ -127,7 +129,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
             Ensure_When_We_Register_A_Method_As_A_Specific_Activity_Type_Ensure_When_We_Resolve_By_Lamdba_Expression_The_Method_Parameters_Are_Used_In_The_Type_Constructor
             ()
         {
-            var conf = BuildConfigurationObject();
+            var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
@@ -141,7 +143,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
             Ensure_When_We_Register_Two_Methods_With_The_Same_As_The_Same_Activity_Type_We_Can_Resolve_Each_Individually
             ()
         {
-            var conf = BuildConfigurationObject();
+            var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
             conf.Register(a => a.Method<TestCodeClass2>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
 
@@ -158,7 +160,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
             Ensure_When_We_Register_The_Method_Of_A_Base_Class_We_Can_Resolve_The_Activity_With_An_Expression_Using_The_Child_Class
             ()
         {
-            var conf = BuildConfigurationObject();
+            var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething(default(string))).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
 
             var resolver = BuildActivityResolver(conf.ActivityRegistrations);
@@ -168,14 +170,23 @@ namespace Swerl.Referee.UnitTests.Resolvers
         }
 
 
+        [Test]
+        public void
+            Ensure_If_We_Provide_A_Specific_Name_For_An_Activity_Registered_By_Method_The_Name_Is_Correctly_Set_On_The_Resolved_Activity
+            ()
+        {
+            var conf = BuilderHelper.BuildConfigurationObject();
+            conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).Name("TestActivity").AuthorizedBy<AllowAnonymous>());
+
+            var resolver = BuildActivityResolver(conf.ActivityRegistrations);
+            var activity = resolver.GetActivity<TestCodeClass>(c => c.DoSomething("test"));
+            
+            Assert.That(activity.Name, Is.EqualTo("TestActivity"));
+        }
+
         protected ActivityResolver BuildActivityResolver(IEnumerable<ActivityRegistration> registrations)
         {
             return new ActivityResolver(new ActivityFactory(), registrations);
-        }
-
-        protected RefereeConfigurationBuilder BuildConfigurationObject()
-        {
-            return new RefereeConfigurationBuilder(new TestAuthorizerFactory(), new ActivityFactory());
-        }
+        }       
     }
 }

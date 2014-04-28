@@ -14,15 +14,9 @@ namespace Swerl.Referee.Core.Activities
                 throw new ArgumentException("Cannot create a method activity from a method not declared on a concrete type","info");
 
             Info = info;
+            Name = info.DeclaringType.FullName + "-" + Info.Name;
         }
 
-        public string Name
-        {
-            get
-            {
-                Debug.Assert(Info.DeclaringType != null, "_info.DeclaringType != null");
-                return Info.DeclaringType.FullName + "-" + Info.Name;
-            }
-        }
+        public string Name { get; set; }
     }
 }

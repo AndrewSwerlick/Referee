@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Principal;
@@ -7,6 +8,7 @@ using Swerl.Referee.Core.Activities;
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.Core.Resolvers;
+using Swerl.Referee.UnitTests.Helpers;
 using Swerl.Referee.UnitTests.TestClasses;
 
 namespace Swerl.Referee.UnitTests.Resolvers
@@ -29,7 +31,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityName = "Test Activity", 
-                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
                 }
             });
 
@@ -45,7 +47,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityType = typeof(TestActivity), 
-                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
                 }
             });
 
@@ -61,7 +63,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass).GetMethod("DoSomething"), 
-                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
                 }
             });
 
@@ -80,12 +82,12 @@ namespace Swerl.Referee.UnitTests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass).GetMethod("DoSomething"), 
-                    AuthorizerTypes = new []{typeof(TestAuthorizer)}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
                 },
                  new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass2).GetMethod("DoSomething"), 
-                    AuthorizerTypes = new[] {typeof(UnauthorizedAuthorizer)}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(UnauthorizedAuthorizer),null}}
                 },
             });
 
@@ -105,7 +107,37 @@ namespace Swerl.Referee.UnitTests.Resolvers
             var authorizer = resolver.GetAuthorizers(new MethodActivity(typeof(TestCodeClass).GetMethod("DoSomething"))).First();
 
             Assert.That(authorizer is AllowAnonymous);
-        }          
+        }
+
+        [Test]
+        public void
+            Ensure_When_We_Configure_An_Authorizer_With_A_Post_Build_Action_The_Resolver_Returns_An_Authorizer_That_Has_Had_The_Action_Executed_Against_It
+            ()
+        {
+            var conf = BuilderHelper.BuildConfigurationObject();
+            conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).AuthorizedBy<HasRoles>(r=> r.AuthorizedRoles = new[] {"Test"}));
+
+            var resolver = BuildAuthorizerResolver(conf.ActivityRegistrations);
+            var authorizer = (HasRoles)resolver.GetAuthorizers(new MethodActivity(typeof (TestCodeClass).GetMethod("DoSomething"))).First();
+            Assert.That(authorizer.AuthorizedRoles.First(), Is.EqualTo("Test"));
+        }
+
+        [Test]
+        public void Ensure_When_We_Register_A_Method_Activity_By_Name_We_Can_Resolve_Is_Authorizer()
+        {
+            
+
+            var conf = BuilderHelper.BuildConfigurationObject();
+            conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).Name("TestActivity").AuthorizedBy<UnauthorizedAuthorizer>());
+
+            var resolver = BuildAuthorizerResolver(conf.ActivityRegistrations);
+            var authorizer = resolver.GetAuthorizers(new MethodActivity(typeof (TestCodeClass).GetMethod("DoSomething"))
+            {
+                Name = "TestActivity"
+            }).First();
+
+            Assert.That(authorizer is UnauthorizedAuthorizer);
+        }
 
         private AuthorizerResolver BuildAuthorizerResolver(IList<ActivityRegistration> registrations)
         {           

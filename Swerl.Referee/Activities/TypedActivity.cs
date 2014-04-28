@@ -2,12 +2,11 @@
 {
     public class TypedActivity : IActivity
     {
-        public string Name
+        public TypedActivity()
         {
-            get
-            {
-                return this.GetType().AssemblyQualifiedName;
-            }
+            Name = this.GetType().AssemblyQualifiedName;
         }
+
+        public string Name { get; set; }
     }
 }

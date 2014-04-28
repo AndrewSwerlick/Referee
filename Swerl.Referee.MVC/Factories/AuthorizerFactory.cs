@@ -18,7 +18,9 @@ namespace Swerl.Referee.MVC.Factories
 
         public IActivityAuthorizer BuilAuthorizer(Type T)
         {
-            return (IActivityAuthorizer) DependencyResolver.Current.GetService(T);
+            var authorizer = (IActivityAuthorizer) DependencyResolver.Current.GetService(T) ??
+                             (IActivityAuthorizer)Activator.CreateInstance(T);
+            return authorizer;
         }
 
         public IActivityAuthorizer BuildDefaultAuthorizer()

@@ -13,13 +13,13 @@ namespace Swerl.Referee.Core.Resolvers
     public class ActivityResolver : IActivityResolver
     {
         private readonly IActivityFactory _activictyFactory;
+        private readonly IEnumerable<IActivityRegistration> _activityRegistrations;
         private readonly IDictionary<string, Type> _registeredActivityNames;
-
-        private readonly IDictionary<MethodInfo, Type> _registeredActivityMethods; 
 
         public ActivityResolver(IActivityFactory activictyFactory, IEnumerable<IActivityRegistration> activityRegistrations)
         {
             _activictyFactory = activictyFactory;
+            _activityRegistrations = activityRegistrations;
 
             var registrations = activityRegistrations as ActivityRegistration[] ?? activityRegistrations.ToArray();
             
@@ -29,11 +29,7 @@ namespace Swerl.Referee.Core.Resolvers
                     a => a.ActivityType
                 );
 
-            _registeredActivityNames = activityNamesForActivityResolver;
-            
-            _registeredActivityMethods = registrations.Where(
-                a => a.ActivityType != null && a.ActivityMethod != null)
-                .ToDictionary(a => a.ActivityMethod, a => a.ActivityType);
+            _registeredActivityNames = activityNamesForActivityResolver;                    
         }
 
         public IActivity GetActivity(string name)
@@ -56,14 +52,20 @@ namespace Swerl.Referee.Core.Resolvers
 
         public IActivity GetActivity(LambdaExpression expression)
         {
-            var method = expression.GetMethodInfor();
-            if (_registeredActivityMethods.ContainsKey(method))
-                return GetActivity(_registeredActivityMethods[method], expression.GetMethodParams());
+            IActivity activity = null;
+            var method = expression.GetMethodInfo();            
+            var registration = _activityRegistrations.SingleOrDefault(a => a.ActivityMethod == method);
+            if (registration != null && registration.ActivityType != null)            
+                activity = GetActivity(registration.ActivityType, expression.GetMethodParams());               
+            
+            if(activity == null)
+                activity = new MethodActivity(method);
 
-            var info = expression.GetMethodInfor();
-            var uniqueName = info.Name + "-" + info.DeclaringType.Name;
+            activity.Name = !string.IsNullOrEmpty(registration.ActivityName)
+                   ? registration.ActivityName
+                   : activity.Name;
 
-            return new MethodActivity(method);
+            return activity;
         }
     }
 }

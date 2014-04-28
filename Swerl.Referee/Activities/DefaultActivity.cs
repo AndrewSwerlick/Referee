@@ -2,7 +2,7 @@
 {
     public class NamedActivity : IActivity
     {
-        public string Name { get; private set; }
+        public string Name { get; set; }
         public NamedActivity(string name)
         {
             Name = name;

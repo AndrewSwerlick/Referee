@@ -12,7 +12,7 @@ namespace Swerl.Referee.Core.Configuration
         string ActivityName { get; set; }
         MethodInfo ActivityMethod { get; set; }
         Type ActivityType { get; set; }
-        IList<Type> AuthorizerTypes { get; set; }
+        IDictionary<Type, Action<IActivityAuthorizer>> AuthorizerTypes { get; set; }
     }
 
     public class ActivityRegistration<TActivity> : IActivityRegistration where TActivity : ActivityRegistration<TActivity>
@@ -20,17 +20,25 @@ namespace Swerl.Referee.Core.Configuration
         public string ActivityName { get; set; }
         public MethodInfo ActivityMethod { get; set; }
         public Type ActivityType { get; set; }
-        public IList<Type> AuthorizerTypes { get; set; }
+        public IDictionary<Type, Action<IActivityAuthorizer>> AuthorizerTypes { get; set; }
+        public Action<IActivityAuthorizer> AuthorizerPostBuildAction { get; set; }
 
         public ActivityRegistration()
         {
-            AuthorizerTypes = new List<Type>();
+            AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>();
         }
-          
 
         public TActivity AuthorizedBy<T>() where T : IActivityAuthorizer
         {
-            AuthorizerTypes.Add(typeof (T));
+            AuthorizerTypes.Add(typeof (T), null);
+            return (TActivity)this;
+        }
+
+        public TActivity AuthorizedBy<T>(Action<T> postBuildExpression) where T : IActivityAuthorizer
+        {
+
+            AuthorizerTypes.Add(typeof(T), (a)=> postBuildExpression.Invoke((T)a));
+
             return (TActivity)this;
         }
 

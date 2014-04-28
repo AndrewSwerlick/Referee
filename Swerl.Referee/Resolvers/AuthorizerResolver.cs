@@ -11,48 +11,47 @@ namespace Swerl.Referee.Core.Resolvers
     public class AuthorizerResolver : IAuthorizerResolver
     {
         private readonly IAuthorizerFactory _authorizerFactory;
-        private readonly IDictionary<Type, IList<Type>> _registeredActivities;
-        private readonly IDictionary<string, IList<Type>> _registeredActivityNames;
+        private readonly IEnumerable<IActivityRegistration> _activityRegistrations;
 
         public AuthorizerResolver(IAuthorizerFactory authorizerFactory,IEnumerable<IActivityRegistration> activityRegistrations)
         {
             var registrations = activityRegistrations as IActivityRegistration[] ?? activityRegistrations.ToArray();
-            var authorizersForTypedActivitiesDictionary =
-                registrations.Where(a => a.ActivityType != null).ToDictionary(a => a.ActivityType, a => a.AuthorizerTypes);
-            
-            var authorizersForNamedActivitiesDictionary = registrations
-                .Where(a => a.AuthorizerTypes != null && a.ActivityMethod == null).ToDictionary(
-                    a => !string.IsNullOrEmpty(a.ActivityName) ? a.ActivityName : a.ActivityType.Name, 
-                    a => a.AuthorizerTypes);            
-
-            var authorizedForMethodActivities = registrations.Where(a => a.ActivityMethod != null).ToDictionary(
-                a => a.ActivityMethod.DeclaringType.FullName +"-"+a.ActivityMethod.Name,
-                a => a.AuthorizerTypes
-                );
 
             _authorizerFactory = authorizerFactory;
-            _registeredActivities = authorizersForTypedActivitiesDictionary;
-            _registeredActivityNames = authorizersForNamedActivitiesDictionary;
-            foreach (var authorizedForMethodActivity in authorizedForMethodActivities)
-            {
-                _registeredActivityNames.Add(authorizedForMethodActivity);
-            }
+            _activityRegistrations = registrations;
         }
 
         public IList<IActivityAuthorizer> GetAuthorizers(IActivity activity)
         {
-            if (_registeredActivities.ContainsKey(activity.GetType()))
-                return BuildAuthorizers(_registeredActivities[activity.GetType()]);
+            IActivityRegistration registration = null;
+            var registrations = _activityRegistrations.Where(a => a.ActivityType == activity.GetType()).ToList();
 
-            if (_registeredActivityNames.ContainsKey(activity.Name))
-                return BuildAuthorizers(_registeredActivityNames[activity.Name]);
+            if (registrations.Count() == 1)            
+                registration = registrations.First();            
+
+            if (registration == null && activity is MethodActivity)
+                registration =
+                    _activityRegistrations.SingleOrDefault(r => r.ActivityMethod == ((MethodActivity) activity).Info);
+
+            if (registration == null)
+                registration = _activityRegistrations.SingleOrDefault(r => r.ActivityName == activity.Name);
+
+            if (registration != null)
+                return BuildAuthorizers(registration.AuthorizerTypes);
 
             return new[] {_authorizerFactory.BuildDefaultAuthorizer()};
         }
 
-        protected virtual IList<IActivityAuthorizer> BuildAuthorizers(IList<Type> types)
+        protected virtual IList<IActivityAuthorizer> BuildAuthorizers(IDictionary<Type, Action<IActivityAuthorizer>> types)
         {
-            return types.Select(type=> _authorizerFactory.BuilAuthorizer(type)).ToList();
+            return types.Select(kv =>
+            {
+                var authorizer = _authorizerFactory.BuilAuthorizer(kv.Key);
+                if(kv.Value != null)
+                    kv.Value.Invoke(authorizer);
+
+                return authorizer;
+            }).ToList();
         }
     }
 }

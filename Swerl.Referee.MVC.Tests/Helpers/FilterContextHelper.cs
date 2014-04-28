@@ -19,7 +19,7 @@ namespace Swerl.Referee.MVC.UnitTests.Helpers
             var httpcontext = Mock.Of<HttpContextBase>();
             Mock.Get(httpcontext).Setup(x => x.User).Returns(new TestPrincipal());
 
-            var info = expression.GetMethodInfor();
+            var info = expression.GetMethodInfo();
             var methodExp = expression.Body as MethodCallExpression;
             var dictionary = new Dictionary<string, object>();
             var arguments =
