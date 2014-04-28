@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace Swerl.Referee.UnitTests.TestClasses
+namespace Swerl.Referee.Tests.TestClasses
 {
     public class TestPrincipal : IPrincipal
     {

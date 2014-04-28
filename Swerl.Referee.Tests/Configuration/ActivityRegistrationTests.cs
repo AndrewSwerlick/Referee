@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 
-namespace Swerl.Referee.UnitTests.Configuration
+namespace Swerl.Referee.Tests.Configuration
 {
     public class ActivityRegistrationTests
     {

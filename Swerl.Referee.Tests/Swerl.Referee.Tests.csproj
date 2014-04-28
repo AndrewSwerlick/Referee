@@ -7,8 +7,8 @@
     <ProjectGuid>{1AAC5158-F077-4A45-9C1B-506C8591A483}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Swerl.Referee.UnitTests</RootNamespace>
-    <AssemblyName>Swerl.Referee.UnitTests</AssemblyName>
+    <RootNamespace>Swerl.Referee.Tests</RootNamespace>
+    <AssemblyName>Swerl.Referee.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -63,8 +63,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Swerl.Referee\Swerl.Referee.Core.csproj">
-      <Project>{1715609E-5D36-44EF-8850-452D7F0956F3}</Project>
+    <ProjectReference Include="..\Swerl.Referee.Core\Swerl.Referee.Core.csproj">
+      <Project>{1715609e-5d36-44ef-8850-452d7f0956f3}</Project>
       <Name>Swerl.Referee.Core</Name>
     </ProjectReference>
   </ItemGroup>

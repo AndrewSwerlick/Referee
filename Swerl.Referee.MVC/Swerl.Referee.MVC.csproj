@@ -83,7 +83,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Swerl.Referee\Swerl.Referee.Core.csproj">
+    <ProjectReference Include="..\Swerl.Referee.Core\Swerl.Referee.Core.csproj">
       <Project>{1715609e-5d36-44ef-8850-452d7f0956f3}</Project>
       <Name>Swerl.Referee.Core</Name>
     </ProjectReference>

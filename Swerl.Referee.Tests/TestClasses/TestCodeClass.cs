@@ -1,6 +1,6 @@
 ﻿using Swerl.Referee.Core.Configuration;
 
-namespace Swerl.Referee.UnitTests.TestClasses
+namespace Swerl.Referee.Tests.TestClasses
 {
     public class TestCodeClass
     {

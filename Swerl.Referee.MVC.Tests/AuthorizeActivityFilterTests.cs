@@ -5,10 +5,10 @@ using System.Web.Mvc;
 using System.Web.Mvc.Async;
 using Moq;
 using NUnit.Framework;
-using Swerl.Referee.MVC.UnitTests.TestClasses;
-using Swerl.Referee.UnitTests.TestClasses;
+using Swerl.Referee.MVC.Tests.TestClasses;
+using Swerl.Referee.Tests.TestClasses;
 
-namespace Swerl.Referee.MVC.UnitTests
+namespace Swerl.Referee.MVC.Tests
 {
     class AuthorizeActivityFilterTests
     {

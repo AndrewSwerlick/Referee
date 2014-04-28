@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace Swerl.Referee.MVC.UnitTests.TestClasses
+namespace Swerl.Referee.MVC.Tests.TestClasses
 {
     class TestController : Controller
     {

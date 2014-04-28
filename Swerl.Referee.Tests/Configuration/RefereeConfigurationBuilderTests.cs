@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using NUnit.Framework;
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.Core.Factories;
-using Swerl.Referee.UnitTests.TestClasses;
+using Swerl.Referee.Tests.TestClasses;
 
-namespace Swerl.Referee.UnitTests.Configuration
+namespace Swerl.Referee.Tests.Configuration
 {
     class RefereeConfigurationBuilderTests
     {

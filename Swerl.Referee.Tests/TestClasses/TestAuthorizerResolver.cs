@@ -2,7 +2,7 @@
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Factories;
 
-namespace Swerl.Referee.UnitTests.TestClasses
+namespace Swerl.Referee.Tests.TestClasses
 {
     public class TestAuthorizerFactory : IAuthorizerFactory
     {        

@@ -1,6 +1,6 @@
 ﻿using Swerl.Referee.Core.Activities;
 
-namespace Swerl.Referee.UnitTests.TestClasses
+namespace Swerl.Referee.Tests.TestClasses
 {
     public class TestActivity2 : TypedActivity
     {

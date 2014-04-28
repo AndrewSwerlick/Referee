@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Web.Mvc;
 using NUnit.Framework;
-using Swerl.Referee.MVC.Configuration;
-using Swerl.Referee.MVC.Factories;
-using Swerl.Referee.MVC.UnitTests.Helpers;
-using Swerl.Referee.UnitTests.TestClasses;
+using Swerl.Referee.MVC.Tests.Helpers;
+using Swerl.Referee.Tests.TestClasses;
 
-namespace Swerl.Referee.MVC.UnitTests.Configuration
+namespace Swerl.Referee.MVC.Tests.Configuration
 {
     public class MVCRefereeConfigurationBuilderTests
     {

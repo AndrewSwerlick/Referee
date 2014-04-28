@@ -7,8 +7,8 @@
     <ProjectGuid>{47874D9D-BF60-481B-88F4-9585BF072BE9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Swerl.Referee.MVC.UnitTests</RootNamespace>
-    <AssemblyName>Swerl.Referee.MVC.UnitTests</AssemblyName>
+    <RootNamespace>Swerl.Referee.MVC.Tests</RootNamespace>
+    <AssemblyName>Swerl.Referee.MVC.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -87,17 +87,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Swerl.Referee.Core\Swerl.Referee.Core.csproj">
+      <Project>{1715609e-5d36-44ef-8850-452d7f0956f3}</Project>
+      <Name>Swerl.Referee.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Swerl.Referee.MVC\Swerl.Referee.MVC.csproj">
       <Project>{e2b85a3d-1987-45ea-bf97-a42448bb3fb1}</Project>
       <Name>Swerl.Referee.MVC</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Swerl.Referee.Tests\Swerl.Referee.UnitTests.csproj">
+    <ProjectReference Include="..\Swerl.Referee.Tests\Swerl.Referee.Tests.csproj">
       <Project>{1AAC5158-F077-4A45-9C1B-506C8591A483}</Project>
-      <Name>Swerl.Referee.UnitTests</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Swerl.Referee\Swerl.Referee.Core.csproj">
-      <Project>{1715609E-5D36-44EF-8850-452D7F0956F3}</Project>
-      <Name>Swerl.Referee.Core</Name>
+      <Name>Swerl.Referee.Tests</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

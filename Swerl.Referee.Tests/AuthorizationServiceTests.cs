@@ -2,9 +2,9 @@
 using Swerl.Referee.Core;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.Core.Factories;
-using Swerl.Referee.UnitTests.TestClasses;
+using Swerl.Referee.Tests.TestClasses;
 
-namespace Swerl.Referee.UnitTests
+namespace Swerl.Referee.Tests
 {
     public class AuthorizationServiceTests
     {             

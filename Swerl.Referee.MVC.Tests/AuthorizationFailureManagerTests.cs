@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using NUnit.Framework;
 using Swerl.Referee.Core.Activities;
-using Swerl.Referee.MVC.UnitTests.Helpers;
-using Swerl.Referee.MVC.UnitTests.TestClasses;
-using Swerl.Referee.UnitTests.TestClasses;
+using Swerl.Referee.MVC.Tests.Helpers;
+using Swerl.Referee.MVC.Tests.TestClasses;
+using Swerl.Referee.Tests.TestClasses;
 
-namespace Swerl.Referee.MVC.UnitTests
+namespace Swerl.Referee.MVC.Tests
 {
     public class AuthorizationFailureManagerTests
     {

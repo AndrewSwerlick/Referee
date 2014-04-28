@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Security.Principal;
 using NUnit.Framework;
 using Swerl.Referee.Core.Activities;
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.Core.Resolvers;
-using Swerl.Referee.UnitTests.Helpers;
-using Swerl.Referee.UnitTests.TestClasses;
+using Swerl.Referee.Tests.Helpers;
+using Swerl.Referee.Tests.TestClasses;
 
-namespace Swerl.Referee.UnitTests.Resolvers
+namespace Swerl.Referee.Tests.Resolvers
 {
     public class AuthorizerResolverTests
     {

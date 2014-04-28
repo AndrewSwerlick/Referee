@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Swerl.Referee.Core.Factories;
+﻿using Swerl.Referee.Core.Factories;
 using Swerl.Referee.MVC.Configuration;
-using Swerl.Referee.UnitTests.TestClasses;
+using Swerl.Referee.Tests.TestClasses;
 
-namespace Swerl.Referee.MVC.UnitTests.Helpers
+namespace Swerl.Referee.MVC.Tests.Helpers
 {
     class BuilderHelper
     {
