@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using NUnit.Framework;
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
@@ -117,6 +118,16 @@ namespace Swerl.Referee.Tests.Configuration
             conf.InvokeStaticRegistrationMethods(typeof (RefereeConfigurationBuilderTests).Assembly);
 
             Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Ensure_We_Can_Register_Multiple_Methods_At_The_Same_Time_For_Convience()
+        {
+            var conf = BuildConfigurationObject();
+            conf.RegisterEach<TestCodeClass>(a=> a.DoSomething(""),a=> a.DoSomething2("")).With(a=> a.AuthorizedBy<UnauthorizedAuthorizer>());
+
+            Assert.That(conf.ActivityRegistrations.Count(), Is.EqualTo(2));
+            Assert.That(conf.ActivityRegistrations.All(a=> a.AuthorizerTypes.Any(kv=> kv.Key == typeof(UnauthorizedAuthorizer))));
         }
 
         private RefereeConfigurationBuilder BuildConfigurationObject()

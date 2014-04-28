@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using Swerl.Referee.Core.Factories;
 using Swerl.Referee.Core.Resolvers;
@@ -38,6 +39,12 @@ namespace Swerl.Referee.Core.Configuration
                 registration.ActivityMethod = methodInfo;
                 ValidateAndAddRegistration(registration);
             }
+        }
+
+        public MultiRegistration RegisterEach<T>(params Expression<Action<T>>[] methods)
+        {
+            var registrations = methods.Select(m => BuildRegistration().Method(m)).ToList();
+            return new MultiRegistration(registrations, this);
         }
 
         public RefereeConfiguration Build()
@@ -118,6 +125,29 @@ namespace Swerl.Referee.Core.Configuration
             foreach (var methodInfo in methods)
             {
                 methodInfo.Invoke(null, new object[] {this});
+            }
+        }
+
+        public class MultiRegistration
+        {
+            private readonly AbstractRefereeConfigurationBuilder<TRegistration> _builder;
+            public IList<TRegistration> Registrations { get; set; }
+
+            public MultiRegistration(IList<TRegistration> registrations,
+                AbstractRefereeConfigurationBuilder<TRegistration> builder)
+            {
+                _builder = builder;
+                Registrations = registrations;
+            }
+
+            public void With(Func<TRegistration, TRegistration> acitivyRegistrationExpression)
+            {
+                foreach (var registration in Registrations)
+                {
+                    acitivyRegistrationExpression.Invoke(registration);
+                    _builder.ValidateAndAddRegistration(registration);
+
+                }
             }
         }
     }

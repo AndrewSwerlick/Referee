@@ -26,23 +26,18 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
             //Overriding the login action since it needs to be anonymous. By calling AuthorizedBy<AllowAnonymous> all other registered authorizers will be ignored
             configuration.Register(a=> a.Method<AccountController>(c=> c.Login("")).AuthorizedBy<AllowAnonymous>());
 
-            //For streamlined syntax, multiple methods can be registered using a foreach syntax
-            var anonymousMethods = new List<Expression<Action<AccountController>>>
-            {
+            //For streamlined syntax, multiple methods can be registered using the RegisterEach method
+            configuration.RegisterEach<AccountController>(
                 c => c.Login(""),
                 c => c.Login(null, ""),
-                c => c.Register(default(RegisterViewModel)),
+                c => c.Register(null),
                 c => c.Register(),
                 c => c.ExternalLogin("", ""),
                 c => c.ExternalLoginCallback(""),
                 c => c.ExternalLoginConfirmation(null, ""),
                 c => c.ExternalLoginFailure()
-            };
-            foreach (var anonymousMethod in anonymousMethods)
-            {
-                configuration.Register(a => a.Method(anonymousMethod).AuthorizedBy<AllowAnonymous>());
-            }
-            
+                ).With(a => a.AuthorizedBy<AllowAnonymous>());
+
         }
 
         public AccountController()
