@@ -64,8 +64,10 @@ namespace Swerl.Referee.Core.Configuration
 
             foreach (var authorizerType in newRegistration.AuthorizerTypes)
             {
-                if(!existingRegistration.AuthorizerTypes.Contains(authorizerType))
-                    existingRegistration.AuthorizerTypes.Add(authorizerType);
+                if(existingRegistration.AuthorizerTypes.Contains(authorizerType))
+                    continue;
+                
+                existingRegistration.AuthorizerTypes.Add(authorizerType);
             }
 
             if (!string.IsNullOrEmpty(newRegistration.ActivityName) &&

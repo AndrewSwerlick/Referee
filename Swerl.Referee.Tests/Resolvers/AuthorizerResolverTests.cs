@@ -30,7 +30,7 @@ namespace Swerl.Referee.Tests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityName = "Test Activity", 
-                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}.ToList()
                 }
             });
 
@@ -46,7 +46,7 @@ namespace Swerl.Referee.Tests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityType = typeof(TestActivity), 
-                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}.ToList()
                 }
             });
 
@@ -62,7 +62,7 @@ namespace Swerl.Referee.Tests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass).GetMethod("DoSomething"), 
-                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}.ToList()
                 }
             });
 
@@ -81,12 +81,12 @@ namespace Swerl.Referee.Tests.Resolvers
                 new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass).GetMethod("DoSomething"), 
-                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(TestAuthorizer),null}}.ToList()
                 },
                  new ActivityRegistration
                 {
                     ActivityMethod = typeof(TestCodeClass2).GetMethod("DoSomething"), 
-                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(UnauthorizedAuthorizer),null}}
+                    AuthorizerTypes = new Dictionary<Type, Action<IActivityAuthorizer>>{{typeof(UnauthorizedAuthorizer),null}}.ToList()
                 },
             });
 

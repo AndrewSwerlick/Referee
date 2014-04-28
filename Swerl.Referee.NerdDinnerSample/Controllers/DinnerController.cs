@@ -28,7 +28,7 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
 
             //Ensure that the delete action on this controller invokes a custom authorizer that checks in the database to see what roles
             //Are required for the activity named "Delete"
-            configuration.Register(a => a.Method<DinnerController>(c => c.Delete()).Name("Delete").AuthorizedBy<RolesInDatabase>());
+            configuration.Register(a => a.Method<DinnerController>(c => c.Delete(default(int))).Name("Delete").AuthorizedBy<RolesInDatabase>());
         }
 
         private readonly ApplicationDbContext _context;
@@ -55,7 +55,8 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
             return View();
         }
 
-        public ActionResult Delete()
+        [HttpPost]
+        public ActionResult Delete(int dinnerId)
         {
             return View();
         }

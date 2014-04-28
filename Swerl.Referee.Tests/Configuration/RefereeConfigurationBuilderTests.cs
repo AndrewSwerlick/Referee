@@ -64,7 +64,17 @@ namespace Swerl.Referee.Tests.Configuration
         {
             var conf = BuildConfigurationObject();
             conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
-            conf.Register(a => a.Name("Test").AuthorizedBy<AllowAnonymous>());
+            conf.Register(a => a.Name("Test").AuthorizedBy<UnauthorizedAuthorizer>());
+            Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
+            Assert.That(conf.ActivityRegistrations.First().AuthorizerTypes.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Ensure_That_If_We_Try_To_Register_The_Same_Name_Twice_With_Roles_Authorizers_With_Different_Roles_The_Authorizer_Types_List_Contains_Two_Items()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Name("Test").AuthorizedBy<HasRoles>(r=> r.Roles("Test")));
+            conf.Register(a => a.Name("Test").AuthorizedBy<HasRoles>(r=> r.Roles("Test2")));
             Assert.That(conf.ActivityRegistrations.Count, Is.EqualTo(1));
             Assert.That(conf.ActivityRegistrations.First().AuthorizerTypes.Count, Is.EqualTo(2));
         }

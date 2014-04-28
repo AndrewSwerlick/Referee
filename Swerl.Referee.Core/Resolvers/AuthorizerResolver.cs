@@ -42,7 +42,7 @@ namespace Swerl.Referee.Core.Resolvers
             return new[] {_authorizerFactory.BuildDefaultAuthorizer()};
         }
 
-        protected virtual IList<IActivityAuthorizer> BuildAuthorizers(IDictionary<Type, Action<IActivityAuthorizer>> types)
+        protected virtual IList<IActivityAuthorizer> BuildAuthorizers(IList<KeyValuePair<Type, Action<IActivityAuthorizer>>> types)
         {
             return types.Select(kv =>
             {

@@ -4,13 +4,32 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using Swerl.Referee.Core.Authorizers;
+using Swerl.Referee.Core.Configuration;
+using Swerl.Referee.MVC.Configuration;
 using Swerl.Referee.NerdDinnerSample.Models;
+using Swerl.Referee.NerdDinnerSample.Security.Authorizers;
 
 namespace Swerl.Referee.NerdDinnerSample.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
+        [AuthorizationRegistration]
+        public static void RegisterAuth(MVCRefereeConfigurationBuilder configuration)
+        {
+            configuration.RegisterClassMethods<AccountController>(a=> a.AuthorizedBy<Authenticated>());
+            
+            //Overriding all actions that need to be anonymous
+            configuration.Register(a=> a.Method<AccountController>(c=> c.Login(default(string))).AuthorizedBy<AllowAnonymous>());
+            configuration.Register(a => a.Method<AccountController>(c => c.Login(default(LoginViewModel), default(string))).AuthorizedBy<AllowAnonymous>());
+            configuration.Register(a => a.Method<AccountController>(c => c.Register(default(RegisterViewModel))).AuthorizedBy<AllowAnonymous>());
+            configuration.Register(a => a.Method<AccountController>(c => c.Register()).AuthorizedBy<AllowAnonymous>());
+            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLogin(default(string),default(string))).AuthorizedBy<AllowAnonymous>());
+            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLoginCallback(default(string))).AuthorizedBy<AllowAnonymous>());
+            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLoginConfirmation(default(ExternalLoginConfirmationViewModel),default(string))).AuthorizedBy<AllowAnonymous>());
+            configuration.Register(a => a.Method<AccountController>(c => c.ExternalLoginFailure()).AuthorizedBy<AllowAnonymous>());
+        }
+
         public AccountController()
             : this(new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext())))
         {
@@ -25,7 +44,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
 
         //
         // GET: /Account/Login
-        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -35,7 +53,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         //
         // POST: /Account/Login
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
@@ -59,7 +76,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -68,7 +84,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -179,7 +194,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         //
         // POST: /Account/ExternalLogin
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -244,7 +258,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
@@ -291,7 +304,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
 
         //
         // GET: /Account/ExternalLoginFailure
-        [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
             return View();
