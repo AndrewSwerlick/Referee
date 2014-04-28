@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7282ED2A-F0D3-4095-B921-B6214809904D}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swerl.Referee.Core", "Swerl.Referee.Core\Swerl.Referee.Core.csproj", "{1715609E-5D36-44EF-8850-452D7F0956F3}"
