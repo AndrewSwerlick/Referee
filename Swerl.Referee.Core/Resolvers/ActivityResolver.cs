@@ -61,7 +61,7 @@ namespace Swerl.Referee.Core.Resolvers
             if(activity == null)
                 activity = new MethodActivity(method);
 
-            activity.Name = !string.IsNullOrEmpty(registration.ActivityName)
+            activity.Name = registration!= null && !string.IsNullOrEmpty(registration.ActivityName)
                    ? registration.ActivityName
                    : activity.Name;
 

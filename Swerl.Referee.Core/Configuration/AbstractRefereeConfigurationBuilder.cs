@@ -67,6 +67,10 @@ namespace Swerl.Referee.Core.Configuration
                 if(!existingRegistration.AuthorizerTypes.Contains(authorizerType))
                     existingRegistration.AuthorizerTypes.Add(authorizerType);
             }
+
+            if (!string.IsNullOrEmpty(newRegistration.ActivityName) &&
+                string.IsNullOrEmpty(existingRegistration.ActivityName))
+                existingRegistration.ActivityName = newRegistration.ActivityName;
         }
 
         private void ValidateAndAddRegistration(TRegistration registration)

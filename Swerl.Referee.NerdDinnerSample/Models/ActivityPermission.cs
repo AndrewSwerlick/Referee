@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Swerl.Referee.NerdDinnerSample.Models
 {
-    public class Dinner
-    {
-        public int Id { get; set; }
+    public class ActivityPermission
+    {       
         public string Name { get; set; }
-        public DateTime? Date { get; set; }
-        public string Description { get; set; }
+        public IList<IdentityRole> Roles { get; set; } 
     }
 }

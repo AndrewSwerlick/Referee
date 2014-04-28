@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using Swerl.Referee.Core;
+using Swerl.Referee.Core.Activities;
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.MVC.Configuration;
@@ -24,6 +25,10 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
 
             //Ensure that the create action on this controller can only be called by users with the"Host" role
             configuration.Register(a=> a.Method<DinnerController>(c=> c.Create()).AuthorizedBy<HasRoles>(r=> r.Roles("Host")));
+
+            //Ensure that the delete action on this controller invokes a custom authorizer that checks in the database to see what roles
+            //Are required for the activity named "Delete"
+            configuration.Register(a => a.Method<DinnerController>(c => c.Delete()).Name("Delete").AuthorizedBy<RolesInDatabase>());
         }
 
         private readonly ApplicationDbContext _context;
@@ -46,6 +51,11 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         }
 
         public ActionResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult Delete()
         {
             return View();
         }
