@@ -124,9 +124,7 @@ namespace Swerl.Referee.UnitTests.Resolvers
 
         [Test]
         public void Ensure_When_We_Register_A_Method_Activity_By_Name_We_Can_Resolve_Is_Authorizer()
-        {
-            
-
+        {            
             var conf = BuilderHelper.BuildConfigurationObject();
             conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething(default(string))).Name("TestActivity").AuthorizedBy<UnauthorizedAuthorizer>());
 
