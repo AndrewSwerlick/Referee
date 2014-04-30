@@ -16,6 +16,6 @@ namespace Swerl.Referee.NerdDinnerSample.Models
         public string State { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public IdentityUser Host { get; set; }
+        public virtual IdentityUser Host { get; set; }
     }
 }

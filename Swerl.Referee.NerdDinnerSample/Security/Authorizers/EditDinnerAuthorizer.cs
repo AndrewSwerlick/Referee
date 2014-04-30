@@ -22,7 +22,7 @@ namespace Swerl.Referee.NerdDinnerSample.Security.Authorizers
         public override bool Authorize(EditDinner activity, IPrincipal user)
         {
             var dinner = _context.Dinners.Find(activity.Id);
-            return dinner.Host.UserName == user.Identity.Name;
+            return dinner.Host != null && dinner.Host.UserName == user.Identity.Name;
         }
     }
 }

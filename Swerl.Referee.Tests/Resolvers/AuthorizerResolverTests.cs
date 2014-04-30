@@ -151,6 +151,22 @@ namespace Swerl.Referee.Tests.Resolvers
             Assert.That(authorizers.Count, Is.EqualTo(1));
         }
 
+        [Test]
+        public void
+            Ensure_That_If_Two_Methods_Are_Registered_To_The_Same_Activity_With_The_Same_Authorizer_And_An_ActivityType_The_Authorizer_Is_Returned_Correctly_By_The_Resolver
+            ()
+        {
+            var builder = BuilderHelper.BuildConfigurationObject();
+            builder.RegisterEach<TestCodeClass>(c=> c.DoSomething(""),c=> c.DoSomething2("")).With(a=> a.As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+
+            var resolver = BuildAuthorizerResolver(builder.ActivityRegistrations);
+            var authorizer1 = resolver.GetAuthorizers<TestCodeClass>(c=> c.DoSomething("")).First();
+            var authorizer2 = resolver.GetAuthorizers<TestCodeClass>(c => c.DoSomething2("")).First();
+
+            Assert.That(authorizer1.GetType(), Is.EqualTo(typeof(UnauthorizedAuthorizer)));
+            Assert.That(authorizer2.GetType(), Is.EqualTo(typeof(UnauthorizedAuthorizer)));
+        }
+
         private AuthorizerResolver BuildAuthorizerResolver(IList<ActivityRegistration> registrations)
         {           
             return new AuthorizerResolver(new TestAuthorizerFactory(), registrations);

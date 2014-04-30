@@ -26,8 +26,13 @@ namespace Swerl.Referee.Core
 
         public bool Authorize<T>(Expression<Action<T>> expression, IPrincipal user)
         {
-            var activity = ActivityResolver.GetActivity(expression);
-            return _authorizerResolver.GetAuthorizers(activity).All( a=> a.Authorize(activity, user));
+            return Authorize((LambdaExpression) expression, user);
+        }
+
+        public bool Authorize(LambdaExpression expression, IPrincipal user)
+        {
+             var activity = ActivityResolver.GetActivity(expression);
+            return _authorizerResolver.GetAuthorizers(expression).All(a => a.Authorize(activity, user));
         }
     }
 }

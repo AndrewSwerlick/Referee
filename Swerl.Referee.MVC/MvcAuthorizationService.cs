@@ -60,11 +60,9 @@ namespace Swerl.Referee.MVC
 
             var expression = Expression.Lambda(methodExpression);
 
-            activity = resolver.GetActivity(expression);
-
-            var result = Authorize(activity, user);
+            var result = Authorize(expression, user);
             if(handleFailure && !result)
-                _failureManager.HandleFailedAuthorization(activity,context);
+                _failureManager.HandleFailedAuthorization(expression,context);
 
             return result;
         }
