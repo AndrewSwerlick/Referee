@@ -10,5 +10,6 @@ namespace Swerl.Referee.NerdDinnerSample.Models.ViewModels
     {
         public DinnerEditModel Data { get; set; }
         public bool CanEdit { get; set; }
+        public bool CanDelete { get; set; }
     }
 }

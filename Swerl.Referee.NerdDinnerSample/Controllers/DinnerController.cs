@@ -78,7 +78,8 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
             var vm = new DinnerViewModel
             {
                 Data = Mapper.Map<DinnerEditModel>(dinner),
-                CanEdit = _service.Authorize<DinnerController>(c => c.Edit(dinner.Id), User)
+                CanEdit = _service.Authorize<DinnerController>(c => c.Edit(dinner.Id), User),
+                CanDelete = _service.Authorize<DinnerController>(c=> c.Delete(dinner.Id),User)
             };
             return View(vm);
         }
@@ -101,7 +102,9 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         [HttpPost]
         public ActionResult Delete(int dinnerId)
         {
-            return View();
+            var dinner = _context.Dinners.Find(dinnerId);
+            _context.Dinners.Remove(dinner);
+            return View("Index");
         }
     }
 }

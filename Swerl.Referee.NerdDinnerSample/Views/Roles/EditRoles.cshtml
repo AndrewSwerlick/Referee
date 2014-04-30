@@ -8,13 +8,15 @@
 
 @using (Html.BeginForm("SaveRoles", "Roles", FormMethod.Post))
 {
+    @Html.HiddenFor(m=> m.UserName)
     @Html.HiddenFor(m=> m.Id)
+    
     <ul>
         @foreach (var item in Model.RoleOptions)
         {
             <li>
-                <input type="checkbox" name="SelectedRoles" @(Model.SelectedRoles.Contains(item.Value)? "checked":"") value="@item.Value"/>
-                <label>@item.Text</label>
+                <input type="checkbox" name="SelectedRoles" @(Model.SelectedRoles.Contains(item.Value)? "checked":"") value="@item.Text"/>
+                <label>@item.Value</label>
             </li>
         }
     </ul>

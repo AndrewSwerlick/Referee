@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.MVC.Configuration;
 using Swerl.Referee.NerdDinnerSample.Models;
@@ -18,7 +19,6 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
     public class RolesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
         [AuthorizationRegistration]
@@ -27,10 +27,9 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
             builder.RegisterClassMethods<RolesController>(a=> a.AuthorizedBy<Authenticated>());
         }
 
-        public RolesController(ApplicationDbContext context, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
+        public RolesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
-            _roleManager = roleManager;
             _userManager = userManager;
         }
 
@@ -51,9 +50,9 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
                 RoleOptions = _context.Roles.Select(r => new SelectListItem
                 {
                     Text = r.Name,
-                    Value = r.Id,
+                    Value = r.Name,
                 }).ToList(),
-                SelectedRoles = user.Roles.Select(r => r.RoleId).ToList(),
+                SelectedRoles = _userManager.GetRoles(id).ToList(),
                 UserName = user.UserName
             };
             return View(em);
@@ -68,12 +67,22 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
                 Value = r.Name,
             }).ToList();
 
+            foreach (var role in model.RoleOptions)
+            {
+                _userManager.RemoveFromRole(model.Id, role.Value);
+            }
+
             foreach (var role in model.SelectedRoles)
             {
                 _userManager.AddToRole(model.Id, role);
             }
             
             _context.SaveChanges();
+
+            //force logout login to refresh the claims cookie. Otherwise new roles won't take immediate effect
+            HttpContext.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
+            var identity = _userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+            HttpContext.GetOwinContext().Authentication.SignIn(new AuthenticationProperties() { IsPersistent = true }, identity);
 
             return RedirectToAction("EditRoles",new {id=model.Id});
         }

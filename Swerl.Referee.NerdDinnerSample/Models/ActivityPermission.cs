@@ -10,6 +10,6 @@ namespace Swerl.Referee.NerdDinnerSample.Models
     public class ActivityPermission
     {       
         public string Name { get; set; }
-        public IList<IdentityRole> Roles { get; set; } 
+        public virtual IList<IdentityRole> Roles { get; set; } 
     }
 }
