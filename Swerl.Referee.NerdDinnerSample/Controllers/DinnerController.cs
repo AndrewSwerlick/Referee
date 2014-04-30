@@ -33,6 +33,8 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
             //Are required for the activity named "Delete"
             configuration.Register(a => a.Method<DinnerController>(c => c.Delete(default(int))).Name("Delete").AuthorizedBy<RolesInDatabase>());
 
+            //Ensure both edit actions on this controller invokes a custom authorizer. The call to "As<EditDinner>" will ensure the authorize method of the authorizer will recieve an instance of the EditDinner class. 
+            //This instance will be be built using parameters from the method.
             configuration.RegisterEach<DinnerController>(a=> a.Edit(0), a=> a.Edit(default(DinnerEditModel)))
                 .With(a=> a.As<EditDinner>().AuthorizedBy<EditDinnerAuthorizer>());
         }
@@ -78,6 +80,8 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
             var vm = new DinnerViewModel
             {
                 Data = Mapper.Map<DinnerEditModel>(dinner),
+                //We can use the service directly in our controlller code to check that a user will be able to perform actions that we want to link to on the view page
+                //We can actually pass in the id of the current dinner via the lambda expression. This will be passed into the constructor of the "EditDinner" class so that the id is then available to the authorizer
                 CanEdit = _service.Authorize<DinnerController>(c => c.Edit(dinner.Id), User),
                 CanDelete = _service.Authorize<DinnerController>(c=> c.Delete(dinner.Id),User)
             };
