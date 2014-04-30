@@ -46,7 +46,14 @@ namespace Swerl.Referee.MVC
             var parameterExpressions = context.ActionParameters.Select(a =>
             {
                 var parameterDescriptor = context.ActionDescriptor.GetParameters().Single(p => p.ParameterName == a.Key);
-                return Expression.Constant(a.Value, parameterDescriptor.ParameterType);
+                var value = a.Value;
+                var type = parameterDescriptor.ParameterType;
+                //If the value is null, and the parameter type is a value type, Expression.Constant will throw an error, so we have to ensure value is set to a sane default. 
+                //The MVC pipeline itself will throw an error later one anyways
+                if (value == null)
+                    value = type.IsValueType ? Activator.CreateInstance(type) : null;
+
+                return Expression.Constant(value, parameterDescriptor.ParameterType);
             });
 
             var methodExpression = Expression.Call(instance, info, parameterExpressions);

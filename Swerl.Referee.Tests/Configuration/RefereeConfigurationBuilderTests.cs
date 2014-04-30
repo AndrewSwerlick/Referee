@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.Core.Factories;
+using Swerl.Referee.NerdDinnerSample.Security.Authorizers;
 using Swerl.Referee.Tests.TestClasses;
 
 namespace Swerl.Referee.Tests.Configuration
@@ -128,6 +129,18 @@ namespace Swerl.Referee.Tests.Configuration
 
             Assert.That(conf.ActivityRegistrations.Count(), Is.EqualTo(2));
             Assert.That(conf.ActivityRegistrations.All(a=> a.AuthorizerTypes.Any(kv=> kv.Key == typeof(UnauthorizedAuthorizer))));
+        }
+
+        [Test]
+        public void
+            Ensure_That_If_We_Register_A_Method_Twice_And_One_Time_Includes_An_As_Call_The_Registrations_Activity_Type_Property_Is_Set
+            ()
+        {
+            var conf = BuildConfigurationObject();
+            conf.Register(a => a.Method<TestCodeClass>(c => c.DoSomething("")).AuthorizedBy<Authenticated>());
+            conf.Register(a=> a.Method<TestCodeClass>(c=> c.DoSomething("")).As<TestActivity>().AuthorizedBy<UnauthorizedAuthorizer>());
+
+            Assert.That(conf.ActivityRegistrations.First().ActivityType, Is.EqualTo(typeof(TestActivity)));
         }
 
         private RefereeConfigurationBuilder BuildConfigurationObject()

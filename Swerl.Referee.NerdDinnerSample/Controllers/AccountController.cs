@@ -21,6 +21,7 @@ namespace Swerl.Referee.NerdDinnerSample.Controllers
         [AuthorizationRegistration]
         public static void RegisterAuth(MVCRefereeConfigurationBuilder configuration)
         {
+            //We can also register all methods in a class at once, using the RegisterClassMethods method
             configuration.RegisterClassMethods<AccountController>(a=> a.AuthorizedBy<Authenticated>());           
 
             //Overriding the login action since it needs to be anonymous. By calling AuthorizedBy<AllowAnonymous> all other registered authorizers will be ignored

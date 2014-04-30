@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Mvc;
 
-namespace Swerl.Referee.NerdDinnerSample.Models
+namespace Swerl.Referee.NerdDinnerSample.Models.EditModels
 {
-    public class Dinner
+    public class DinnerEditModel
     {
+        [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime? Start { get; set; }
@@ -16,6 +18,5 @@ namespace Swerl.Referee.NerdDinnerSample.Models
         public string State { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public IdentityUser Host { get; set; }
     }
 }

@@ -69,6 +69,9 @@ namespace Swerl.Referee.Core.Configuration
                         newRegistration.ActivityMethod.Name, existingRegistration.ActivityType.FullName,
                         newRegistration.ActivityType.FullName));
 
+            if (existingRegistration.ActivityType == null && newRegistration.ActivityType != null)
+                existingRegistration.ActivityType = newRegistration.ActivityType;
+
             foreach (var authorizerType in newRegistration.AuthorizerTypes)
             {
                 if(existingRegistration.AuthorizerTypes.Contains(authorizerType))

@@ -1,0 +1,14 @@
+﻿@model Swerl.Referee.NerdDinnerSample.Models.ViewModels.DinnerViewModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>@Model.Data.Name</h2>
+
+@Html.DisplayFor(m=>m.Data)
+
+@if (Model.CanEdit)
+{
+    @Html.ActionLink("Edit","Edit",new {id = Model.Data.Id})
+}

@@ -23,7 +23,7 @@ namespace Swerl.Referee.Core.Authorizers
 
         public void Roles(params string[] roles)
         {
-            
+            AuthorizedRoles = roles;
         }
     }
 }

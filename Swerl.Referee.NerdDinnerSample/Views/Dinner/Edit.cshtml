@@ -1,0 +1,13 @@
+﻿@model Swerl.Referee.NerdDinnerSample.Models.EditModels.DinnerEditModel
+
+@{
+    ViewBag.Title = Model.Name;
+}
+
+<h2>@Model.Name</h2>
+
+@using (Html.BeginForm("Edit", "Dinner", FormMethod.Post))
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Save"/>
+}

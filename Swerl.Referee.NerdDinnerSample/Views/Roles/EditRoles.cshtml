@@ -1,0 +1,22 @@
+﻿@model Swerl.Referee.NerdDinnerSample.Models.EditModels.RolesEditModel
+
+@{
+    ViewBag.Title = "Edit Roles";
+}
+
+<h2>@Model.UserName</h2>
+
+@using (Html.BeginForm("SaveRoles", "Roles", FormMethod.Post))
+{
+    @Html.HiddenFor(m=> m.Id)
+    <ul>
+        @foreach (var item in Model.RoleOptions)
+        {
+            <li>
+                <input type="checkbox" name="SelectedRoles" @(Model.SelectedRoles.Contains(item.Value)? "checked":"") value="@item.Value"/>
+                <label>@item.Text</label>
+            </li>
+        }
+    </ul>
+    <input type="submit" value="Save"/>
+}

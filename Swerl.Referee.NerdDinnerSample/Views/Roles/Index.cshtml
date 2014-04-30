@@ -1,0 +1,14 @@
+﻿@model Swerl.Referee.NerdDinnerSample.Models.ViewModels.RolesIndexPageViewModel
+
+@{
+    ViewBag.Title = "Modify Roles";
+}
+
+<h2>Modify Roles</h2>
+
+<ul>
+    @foreach (var user in Model.Users)
+    {
+        <li>@Html.ActionLink(user.UserName,"EditRoles",new{id=user.Id})</li>
+    }
+</ul>

@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Swerl.Referee.NerdDinnerSample.Models
@@ -18,6 +20,7 @@ namespace Swerl.Referee.NerdDinnerSample.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            Configuration.LazyLoadingEnabled = true;
             modelBuilder.Entity<ActivityPermission>()                
                 .HasKey(a=> a.Name)
                 .HasMany(a => a.Roles)
@@ -39,9 +42,17 @@ namespace Swerl.Referee.NerdDinnerSample.Models
     {
         protected override void Seed(ApplicationDbContext context)
         {
+            var roles = new[] {"Admin", "Host"}.Select(r=> new IdentityRole(r)).ToList();
+            foreach (var identityRole in roles)
+            {
+                context.Roles.Add(identityRole);
+            }
+
+            context.SaveChanges();
+
             context.ActivityPermissions.AddRange(new List<ActivityPermission>
             {
-                new ActivityPermission{Name = "Delete", Roles = new IdentityRole[]{new IdentityRole("Admin"), }}
+                new ActivityPermission{Name = "Delete", Roles = new IdentityRole[]{roles.First(), }}
             });
             context.SaveChanges();
         }
