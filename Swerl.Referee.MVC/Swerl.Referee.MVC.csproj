@@ -84,7 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Package\AppStart_RefereeConfig.cs.pp" />
+    <None Include="content\AppStart_RefereeConfig.cs.pp" />
     <None Include="Swerl.Referee.MVC.nuspec" />
   </ItemGroup>
   <ItemGroup>
