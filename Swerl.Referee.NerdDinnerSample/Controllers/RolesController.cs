@@ -7,6 +7,7 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
+using Swerl.Referee.Core.Authorizers;
 using Swerl.Referee.Core.Configuration;
 using Swerl.Referee.MVC.Configuration;
 using Swerl.Referee.NerdDinnerSample.Models;

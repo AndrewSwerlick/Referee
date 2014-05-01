@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
+﻿using System.Security.Principal;
 using Swerl.Referee.Core.Activities;
-using Swerl.Referee.Core.Authorizers;
 
-namespace Swerl.Referee.NerdDinnerSample.Security.Authorizers
+namespace Swerl.Referee.Core.Authorizers
 {
     public class Authenticated : IActivityAuthorizer
     {
