@@ -13,6 +13,8 @@
             <dependency id="Swerl.Referee.Core" version="0.9.0"/>
             <dependency id="Microsoft.AspNet.Mvc" version="5.1.1" />
         </dependencies>
-      <file src="../readme.md" target="readme.txt" />
+      <files>
+        <file src="readme.txt" target="" />
+      </files>
     </metadata>
 </package>
