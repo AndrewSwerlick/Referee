@@ -44,7 +44,7 @@ However the real power in Referee is not using the built in IActivityAuthorizer 
 
 Custom Authorizers
 -------------------
-To create a custom authorizer, all you have to do is inherit from the class IAuthorizer. For example here is an authorizer that only allows users whos name starts with "A" to perform the action.
+To create a custom authorizer, all you have to do is inherit from the class IAuthorizer. For example here is an authorizer that only allows users whose name starts with "A" to perform the action.
 
 	public class StartsWithA : IActivityAuthorizer
     {
@@ -157,7 +157,7 @@ Then instead of using the static configuration code, you'll need to manaully bui
 Once you've called all the configuration logic against that instance of the MVCRefereeConfigurationBuilder class, you can call the Swerl.Referee.MVC.Referee.Configure and pass in the builder instance.
 
 To register the current authorization service with your dependency injection framework, simply store the return value of the Swerl.Referee.MVC.Referee.Configure method. 
-That method returns the configured IAuthorizationService instance, which you can register with your DI framework as a single application instance.
+This method returns the configured IAuthorizationService instance, which you can register with your DI framework as a single application instance.
 
 
 
