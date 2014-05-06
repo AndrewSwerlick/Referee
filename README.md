@@ -44,7 +44,7 @@ However the real power in referee is not using the built in IActivityAuthorizer 
 
 Custom Authorizers
 -------------------
-To create a custom authorizer, all you have to do is inherit from the class IAuthorizer. For example let's create an authorizer that only allows users who's name starts with "A" to perform the action.
+To create a custom authorizer, all you have to do is inherit from the class IAuthorizer. For example let's create an authorizer that only allows users whos name starts with "A" to perform the action.
 
 	public class StartsWithA : IActivityAuthorizer
     {
@@ -66,7 +66,7 @@ We can also tell referee to run configuration logic on the authorizer after it's
 
         public bool Authorize(IActivity activity, IPrincipal user)
         {
-            return user.Identity.Name.StartsWith("A");
+            return user.Identity.Name.StartsWith(StartingString);
         }
     }
 
