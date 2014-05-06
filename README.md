@@ -12,4 +12,38 @@ should see links to those actions. Referee offers a framework that allows develo
 
 Getting Started
 ===============
-TODO. Look at the Referee.NerdDinnerSample for now
+To start working with Referee install the nuget package available at this feed https://www.myget.org/feed/Packages/swerl. For MVC apps install the package Swerl.Referee.MVC. 
+
+Once the package is installed, you'll need to configure Referee to run during application startup. The easiest way to do that is to add these lines to your Global.asax file
+
+	MVC.Referee.Configure((builder) =>
+	{
+		//Your registration code here
+	});
+
+In the middle section, you add registration code specific to your app. In the regisistration code you tell Referee how specific controller actions should be authorized. 
+
+For example, let's say you have a Controller called MyController with an action called Foo. To make it so that only authenticated users can hit the Foo action, you'd write a line like this.
+
+	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<Authenticated>());
+
+If you want all controller actions in MyController to require authentication you'd write this
+
+	builder.RegisterClassMethods<MyController>(a =>a.AuthorizedBy<Authenticated>());
+
+What's actually going on here?
+------------------------------
+Great question. Basically in each case, you're telling Referee that some method in your application is supposed to be authorized by the Authenticated class. The Authenticated class is a special class defined by Referee that implements the type IAuthorizer.
+
+Aside from the Authenticated class, Referee exposes one other authorizer called HasRoles. You use it in a similar way, like this. 
+
+	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<HasRoles>(r=> r.Roles("Bar"));
+
+However the real power in referee is not using the built in IAuthorizer classes but creating your own
+
+Custom Authorizers
+------------------
+
+
+
+

@@ -41,7 +41,7 @@
   <ItemGroup>
     <Compile Include="Activities\MethodActivity.cs" />
     <Compile Include="Authorizers\Authenticated.cs" />
-    <Compile Include="Authorizers\Roles.cs" />
+    <Compile Include="Authorizers\HasRoles.cs" />
     <Compile Include="Configuration\ActivityRegistration.cs" />
     <Compile Include="Configuration\AuthorizationConfiguration.cs" />
     <Compile Include="Authorizers\AbstractActivityAuthorizer.cs" />
