@@ -57,6 +57,23 @@ Now we can tell Referee to use this authorizer in our application with the same 
 
 	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<StartsWithA>();
 
+We can also tell referee to run configuration logic on the authorizer after it's built. Let's say we want a more generic IActivityAuthorizer that will work with any letter. We can write that like this.
+
+	public class StartsWith : IActivityAuthorizer
+    {
+		public string StartingString {get;set;}
+
+        public bool Authorize(IActivity activity, IPrincipal user)
+        {
+            return user.Identity.Name.StartsWith("A");
+        }
+    }
+
+Then we can register it like this.
+
+		builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<StartsWithA>(a=> a.StartingString = "A");
+
+
 
 
 
