@@ -8,7 +8,7 @@ Why Referee
 
 Built in authorization mechanisms for ASP.NET MVC are limited to simple roles based authorization. When developers need to go beyond this, they often end up putting authorization logic directly into the body of their controller actions. 
 This harms testability and maintainability of applicaitons, because authorization logic is mixed in with non-authorization code. Authorization logic has to be duplicated, to protect controller actions and to determine whether or not a user
-should see links to those actions. Referee offers a framework that allows developers to encapsulate authorization logic in specific classes and to quickly configuration how authorization is applied to various controller actions.
+should see links to those actions. Referee offers a framework that allows developers to encapsulate authorization logic in specific classes and to quickly configure how authorization is applied to various controller actions.
 
 Getting Started
 ===============
@@ -33,16 +33,32 @@ If you want all controller actions in MyController to require authentication you
 
 What's actually going on here?
 ------------------------------
-Great question. Basically in each case, you're telling Referee that some method in your application is supposed to be authorized by the Authenticated class. The Authenticated class is a special class defined by Referee that implements the type IAuthorizer.
+Basically in each case, you're telling Referee that some method in your application is supposed to be authorized by the Authenticated class. The Authenticated class is a special class defined by Referee that implements the type IActivityAuthorizer.
 
 Aside from the Authenticated class, Referee exposes one other authorizer called HasRoles. You use it in a similar way, like this. 
 
 	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<HasRoles>(r=> r.Roles("Bar"));
 
-However the real power in referee is not using the built in IAuthorizer classes but creating your own
+However the real power in referee is not using the built in IActivityAuthorizer classes but creating your own
 
 Custom Authorizers
-------------------
+-------------------
+To create a custom authorizer, all you have to do is inherit from the class IAuthorizer. For example let's create an authorizer that only allows users who's name starts with "A" to perform the action.
+
+	public class StartsWithA : IActivityAuthorizer
+    {
+        public bool Authorize(IActivity activity, IPrincipal user)
+        {
+            return user.Identity.Name.StartsWith("A");
+        }
+    }
+
+Now we can tell Referee to use this authorizer in our application with the same syntax as above
+
+	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<StartsWithA>();
+
+
+
 
 
 
