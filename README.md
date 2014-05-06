@@ -37,7 +37,8 @@ Basically in each case, you're telling Referee that some method in your applicat
 
 Aside from the Authenticated class, Referee exposes one other authorizer called HasRoles. You use it in a similar way, like this. 
 
-	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<HasRoles>(r=> r.Roles("Bar"));
+	builder.Register(a =>a.Method<MyController>(c => c.Foo())
+						  .AuthorizedBy<HasRoles>(r=> r.Roles("Bar"));
 
 However the real power in referee is not using the built in IActivityAuthorizer classes but creating your own
 
@@ -71,7 +72,10 @@ We can also tell referee to run configuration logic on the authorizer after it's
 
 Then we can register it like this.
 
-		builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<StartsWithA>(a=> a.StartingString = "A");
+	builder.Register(a =>a.Method<MyController>(c => c.Foo())
+						  .AuthorizedBy<StartsWithA>(a=> a.StartingString = "A");
+
+
 
 
 
