@@ -21,6 +21,7 @@ namespace Swerl.Referee.MVC
             var filter = new AuthorizeActivity(service, GlobalFilters.Filters);
 
             GlobalFilters.Filters.Add(filter);
+            CurrentAuthorizationService = service;
             return service;
         }
 
@@ -30,5 +31,7 @@ namespace Swerl.Referee.MVC
             builderConfiguration.Invoke(builder);
             return Configure(builder);
         }
+
+        public static IAuthorizationService CurrentAuthorizationService { get; private set; }
     }
 }
