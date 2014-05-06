@@ -16,7 +16,7 @@ To start working with Referee install the nuget package available at this feed h
 
 Once the package is installed, you'll need to configure Referee to run during application startup. The easiest way to do that is to add these lines to your Global.asax.cs file
 
-	MVC.Referee.Configure((builder) =>
+	Swerl.Referee.MVC.Referee.Configure((builder) =>
 	{
 		//Your registration code here
 	});
@@ -145,6 +145,20 @@ You can also pass method parameters into the method you're authorizing. For exam
 	service.Authorize<MyController>(c=> c.EditFoo(6), User)
 
 Again, you'll get a true false response you can use to decide if you want to render the link.
+
+Using Dependency Injection
+--------------------------
+Referee is built with dependency injection in mind, and you can use dependency injection in your authorizers, and to get access to the IAuthorizationService object.
+
+Out of the box all authorizers are built using calls to the current MVC DependencyResolver. So whatever Dependency injection framework you use, Referee should play nicely with it so long as you using DependencyResolver.SetCurrent() to wire up your dependency resolution.
+
+If this behavior does not suit your needs you can create your own implementation of the IAuthorizerFactory class for building up IActivityAuthorizers. 
+Then instead of using the static configuration code, you'll need to manaully build up an instance of the MVCRefereeConfigurationBuilder class, passing in your own IAuthorizerFactory instance.
+Once you've called all the configuration logic against that instance of the MVCRefereeConfigurationBuilder class, you can call the Swerl.Referee.MVC.Referee.Configure and pass in the builder instance.
+
+To register the current authorization service with your dependency injection framework, simply store the return value of the Swerl.Referee.MVC.Referee.Configure method. 
+That method returns the configured IAuthorizationService instance, which you can register with your DI framework as a single application instance.
+
 
 
 

@@ -28,7 +28,7 @@ namespace Swerl.Referee.MVC
         public static IAuthorizationService Configure(Action<MVCRefereeConfigurationBuilder> builderConfiguration)
         {
             var builder = new MVCRefereeConfigurationBuilder(new AuthorizerFactory(), new ActivityFactory());
-            builderConfiguration.Invoke(builder);
+            builderConfiguration.Invoke(builder);            
             return Configure(builder);
         }
 
