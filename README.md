@@ -127,6 +127,8 @@ All we have to do to support the string one as well is add a constructor to FooA
 		}      
     }
 
+If your method takes multiple parameters, you just need to ensure that there's a constructor with the a matching list of parameters
+
 
 
 
