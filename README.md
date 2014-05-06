@@ -56,7 +56,7 @@ To create a custom authorizer, all you have to do is inherit from the class IAut
 
 Now we can tell Referee to use this authorizer in our application with the same syntax as above
 
-	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<StartsWithA>();
+	builder.Register(a =>a.Method<MyController>(c => c.Foo()).AuthorizedBy<StartsWithA>());
 
 We can also tell referee to run configuration logic on the authorizer after it's built. Let's say we want a more generic IActivityAuthorizer that will work with any letter. We can write that like this.
 
@@ -73,7 +73,60 @@ We can also tell referee to run configuration logic on the authorizer after it's
 Then we can register it like this.
 
 	builder.Register(a =>a.Method<MyController>(c => c.Foo())
-						  .AuthorizedBy<StartsWithA>(a=> a.StartingString = "A");
+						  .AuthorizedBy<StartsWithA>(a=> a.StartingString = "A"));
+
+Consuming Method Parameters
+---------------------------
+What if our method MyController.Foo takes a parameter though? Like an integer id for a specific record in the database. In this case, Referee allows you to create another class that will help you pass that that data into your authorizer. 
+This is what we call an activity, and it's a class that inherits from IActivity. For our Foo method it would be something like this.
+
+	public class FooActivity : TypedActivity
+    {
+        public int Id { get; private set; }
+
+        public FooActivity(int id)
+        {
+            Id = id;
+        }        
+    }
+
+Then we can create an IActivityAuthorizer like this
+	
+	public class EditFooAuthorizer : AbstractActivityAuthorizer<FooActivity>
+    {       
+        public override bool Authorize(FooActivity activity, IPrincipal user)
+        {
+            return activity.Id > 5 || user.IsInRole("Admin");
+        }
+    }
+
+
+Finally we tie this all together with the registration
+
+	builder.Register(a =>a.Method<MyController>(c => c.Foo(0))
+						  .As<FooActivity>()
+						  .AuthorizedBy<EditFooAuthorizer>());
+
+Now users can only edit Foos if they're an Admin, or the Foo has an id less than 5.
+
+We can reuse the same FooActivity class with multiple methods. Let's say there are two version of the MyController.Foo class, one that take in an int as a parameter, and one that takes in a string. 
+All we have to do to support the string one as well is add a constructor to FooActivity that takes a string.
+
+	public class FooActivity : TypedActivity
+    {
+        public int Id { get; private set; }
+
+        public FooActivity(int id)
+        {
+            Id = id;
+        }  
+		
+		public FooActivity(string id)
+		{
+			Id = int.Parse(id);
+		}      
+    }
+
 
 
 
