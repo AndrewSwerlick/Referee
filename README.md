@@ -109,7 +109,7 @@ Finally we tie this all together with the registration
 
 Now users can only edit Foos if they're an Admin, or the Foo has an id less than 5.
 
-We can reuse the same FooActivity class with multiple methods. Let's say there are two version of the MyController.Foo class, one that take in an int as a parameter, and one that takes in a string. 
+We can reuse the same FooActivity class with multiple methods. Let's say there are two versions of the MyController.Foo class, one that take in an int as a parameter, and one that takes in a string. 
 All we have to do to support the string one as well is add a constructor to FooActivity that takes a string.
 
 	public class FooActivity : TypedActivity
