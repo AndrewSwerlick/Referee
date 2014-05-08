@@ -22,5 +22,7 @@
   </metadata>
   <files>
     <file src="readme.txt" target="" />
+    <file src="..\build\Swerl.Referee.MVC\**" target="lib\" />
+    <file src="..\build\Swerl.Referee.MVC\**" target="lib\" />
   </files>
 </package>
