@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <id>Swerl.Referee.MVC</id>
-    <version>1.0.0-CI00000</version>
+    <id>Swerl.Referee.Core</id>
+    <version>0.1</version>
     <title>Swerl.Referee.Core</title>
     <authors>Andrew Swerlick</authors>
     <owners>Andrew Swerlick</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>An authorization framework built for asp.net mvc</description>
+    <description>An authorization framework built for asp.net</description>
     <copyright>Copyright ©  2014</copyright>    
   </metadata>
   <files>
-    <file src="..\build\Swerl.Referee.MVC\**" target="lib\" />
-    <file src="..\build\Swerl.Referee.MVC\**" target="lib\" />
+    <file src="..\build\Swerl.Referee.Core\**" target="lib\" />
+    <file src="..\build\Swerl.Referee.Core\**" target="lib\" />
   </files>
 </package>

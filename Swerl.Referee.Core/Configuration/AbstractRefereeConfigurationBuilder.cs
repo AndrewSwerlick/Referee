@@ -123,7 +123,7 @@ namespace Swerl.Referee.Core.Configuration
                 a =>
                     a.GetTypes()
                         .SelectMany(t => t.GetMethods(BindingFlags.Static | BindingFlags.Public))
-                        .Where(m => m.GetCustomAttributes(typeof (AuthorizationRegistrationAttribute)).Any()));
+                        .Where(m => m.GetCustomAttributes(typeof (AuthorizationRegistrationAttribute),false).Any()));
 
             foreach (var methodInfo in methods)
             {
