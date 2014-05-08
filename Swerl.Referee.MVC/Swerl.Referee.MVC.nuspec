@@ -11,11 +11,11 @@
     <copyright>Copyright ©  2014</copyright>
     <dependencies>
       <group targetFramework="net45">
-        <dependency id="Swerl.Referee.Core" version="0.1.0"/>
+        <dependency id="Swerl.Referee.Core" version="0.0.1"/>
         <dependency id="Microsoft.AspNet.Mvc" version="(4.0.20710,6)" />
       </group>
       <group targetFramework="net40">
-        <dependency id="Swerl.Referee.Core" version="0.1.0"/>
+        <dependency id="Swerl.Referee.Core" version="0.0.1"/>
         <dependency id="Microsoft.AspNet.Mvc" version="(4.0.20710,5)" />
       </group>
     </dependencies>
