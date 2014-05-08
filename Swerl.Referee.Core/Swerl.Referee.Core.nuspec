@@ -11,7 +11,7 @@
     <copyright>Copyright ©  2014</copyright>    
   </metadata>
   <files>
-    <file src="..\build\Swerl.Referee.Core\**" target="lib\" />
-    <file src="..\build\Swerl.Referee.Core\**" target="lib\" />
+    <file src="..\build\Swerl.Referee.Core\**\Swerl.Referee.Core.dll" target="lib\" />
+    <file src="..\build\Swerl.Referee.Core\**\Swerl.Referee.Core.pdb" target="lib\" />
   </files>
 </package>

@@ -22,7 +22,7 @@
   </metadata>
   <files>
     <file src="readme.txt" target="" />
-    <file src="..\build\Swerl.Referee.MVC\**" target="lib\" />
-    <file src="..\build\Swerl.Referee.MVC\**" target="lib\" />
+    <file src="..\build\Swerl.Referee.MVC\**\Swerl.Referee.MVC.dll" target="lib\" />
+    <file src="..\build\Swerl.Referee.MVC\**\Swerl.Referee.MVC.pdb" target="lib\" />
   </files>
 </package>
